@@ -1,0 +1,70 @@
+<h1>メールひな形一覧</h1>
+<span style="color:green"><pre><%= flash[:notice] %></pre></span>
+<% unless @sentences.blank? %>
+<table>
+  <tr>
+    <td class="tree">
+      <ul>
+      <% @sentences.each do |sentence| %>
+        <li style="list-style:none;">
+        <% unless sentence.child_sentences.blank? %>
+          <span onclick="Node_Click('tree_<%= sentence.id %>','open<%= sentence.id %>','close<%= sentence.id %>')">
+          <%= image_tag("cl_minous.png", {:id => "close#{sentence.id}", :style => "width:10px;length:10px;display:none;"}) %>
+          <%= image_tag("op_plus.png", {:id => "open#{sentence.id}", :style => "width:10px;length:10px;"}) %>
+          </span>
+        <% else %>
+          <%= image_tag("cl_minous.png", :alt => "") %>
+        <% end %>
+        <%= sentence.group_name %>:<%= link_to sentence.subject, org_sentence_path(sentence) %>
+        <% unless sentence.child_sentences.blank? %>
+          <div>
+          <span id='tree_<%= sentence.id %>' style='display:none'>
+          <% second_num = sentence.child_sentences.count %>
+          <% sentence.child_sentences.each_with_index do |sentence, i| %>
+            <li style="list-style:none;">
+            <% if i < second_num - 1 %>
+              <%= image_tag("blanch_t.png", :alt => "") %>
+            <% else %>
+              <%= image_tag("blanch_l.png", :alt => "") %>
+            <% end %>
+            <% unless sentence.child_sentences.blank? %>
+              <span onclick="Node_Click('tree_<%= sentence.id %>','open<%= sentence.id %>','close<%= sentence.id %>')">
+              <%= image_tag("cl_minous.png", {:id => "close#{sentence.id}", :style => "width:10px;length:10px;display:none;"}) %>
+              <%= image_tag("op_plus.png", {:id => "open#{sentence.id}", :style => "width:10px;length:10px;"}) %>
+              </span>
+            <% else %>
+              <%= image_tag("cl_minous.png", :alt => "") %>
+            <% end %>
+            <%= sentence.group_name %>:<%= link_to sentence.subject, org_sentence_path(sentence) %>
+            <% unless sentence.child_sentences.blank? %>
+              <div>
+              <span id='tree_<%= sentence.id %>' style='display:none'>
+              <% third_num = sentence.child_sentences.count %>
+              <% sentence.child_sentences.each_with_index do |sentence, j| %>
+                <li style="list-style:none;">
+                <% if j < third_num - 1 %>
+                  <%= image_tag("blanch_t.png", {:alt => "", :style => "margin-left:28px;"}) %>
+                <% else %>
+                  <%= image_tag("blanch_l.png", {:alt => "", :style => "margin-left:28px;"}) %>
+                <% end %>
+                <%= link_to sentence.subject, org_sentence_path(sentence) %>
+               </li>
+              <% end %>
+              </span>
+              </div>
+            <% end %>
+            </li>
+          <% end %>
+          </span>
+          </div>
+        <% end %>
+        </li>
+        <% end %>
+      </ul>
+    </td>
+  </tr>
+</table>
+<% end %>
+<br /><br />
+<%= link_to "新規作成", new_org_sentence_path %>
+

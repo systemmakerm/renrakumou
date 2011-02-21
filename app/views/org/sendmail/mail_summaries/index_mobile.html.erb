@@ -1,0 +1,40 @@
+<h1>メール一覧</h1>
+<span style="color:green;"><pre><%= flash[:notice] %></pre></span>
+<% if @mail_summaries.present? -%>
+  <table>
+    <tr>
+      <th>No.</th>
+      <th>件名</th>
+      <th>送信予定日時</th>
+      <th>送信日時</th>
+    </tr>
+    <% @mail_summaries.each do |mail_summary| -%>
+      <tr>
+        <td>
+          <%= mail_summary.id %>
+        </td>
+        <td>
+          <%= link_to h(mail_summary.subject), org_sendmail_mail_summary_path(mail_summary) %>
+        </td>
+        <td>
+          <% if mail_summary.delivery_reserve_time && mail_summary.delivery_reserve_time.delivery_reserve_time %>
+            <%= mail_summary.delivery_reserve_time.delivery_reserve_time.strftime("%Y/%m/%d %H:%M") -%>
+          <% end %>
+        </td>
+        <td>
+          <% if mail_summary.delivery_time && mail_summary.delivery_time.delivery_time.present? %>
+            <%= mail_summary.delivery_time.delivery_time.strftime("%Y/%m/%d %H:%M") -%>
+          <% end %>
+        </td>
+      </tr>
+    <% end -%>
+  </table>
+<% end -%>
+<center>
+  <%= will_paginate(@mail_summaries, :params => {},
+                    :previous_label => "前", :next_label => '次') -%>
+
+</center>
+<%= link_to "新規作成",  new_org_sendmail_mail_summary_path %>
+<br />
+<%= link_to "ページトップへ戻る", "#page_top" %>

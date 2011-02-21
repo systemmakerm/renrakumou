@@ -1,0 +1,32 @@
+<style type="text/css">
+
+table.mail_confirm th{
+  border: solid 1px #111111;
+  font-size: 15px;
+}
+table.mail_confirm td{
+  border: solid 1px #111111;
+  padding: 5px;
+  width: 450px;
+  font-size: 15px;
+}
+</style>
+<div><span style="float:left;">送信エラー詳細</span>
+<span style="float:right;"><a href="javascript:window.close();" style="float:right;">閉じる</a></span>
+</div>
+<div style="clear:both;"></div>
+<table class="mail_confirm">
+  <tr>
+    <th>受信者名</th>
+    <td><%= @error_mail.recipient.name %></td>
+  </tr>
+  <tr>
+    <th>メールアドレス</th>
+    <td><%= @error_mail.recipient.account.login %></td>
+  </tr>
+  <tr>
+    <th>エラーコード</th>
+    <td><%= @error_mail.error_code %></td>
+  </tr>
+</table>
+

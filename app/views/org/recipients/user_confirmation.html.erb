@@ -1,0 +1,14 @@
+<% form_for(@user, :url => user_confirmation_params[:url], :html => {:method => user_confirmation_params[:method]}) do |f| %>
+  <h1>ユーザー登録確認</h1>
+  <%= f.error_messages.untaint %><br />
+  <%= f.submit "戻る", :name => "cancel" %>
+  <br /><br />
+  <%= render :partial => "/share/user/user_confirmation", :locals => {:user => @user} %>
+  <br />
+  <%= f.hidden_field :organization_id %>
+  <%= f.hidden_field :number %>
+  <%= f.hidden_field :name %>
+  <%= f.hidden_field :memo %>
+  <%= f.submit "保存" %>
+<% end %>
+

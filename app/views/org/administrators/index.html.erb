@@ -1,0 +1,28 @@
+<h1>管理者一覧</h1>
+<span style="color:green"><pre><%= flash[:notice] %></pre></span>
+<% unless @administrators.blank? %>
+  <table class="admin_list">
+    <tr>
+      <th>管理者名</th>
+      <th>メールアドレス</th>
+    </tr>
+    <% @administrators.each do |administrator| %>
+      <tr>
+        <td class="admin_list_td1">
+          <%= link_to administrator.name, org_administrator_path(administrator) -%>
+        </td>
+        <td class="admin_list_td2">
+          <%= administrator.account.login -%>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <div style="width:500px;text-align:center">
+  <%= will_paginate(@administrators, :params => {},
+        :previous_label => '前', :next_label => '次') -%>
+  </div>
+<% end -%>
+<br /><br />
+<%= link_to "新規登録", new_org_administrator_path %>
+
+

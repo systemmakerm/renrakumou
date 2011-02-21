@@ -1,0 +1,69 @@
+<h1>グループ一覧</h1>
+<span style="color:green"><pre><%= flash[:notice] %></pre></span>
+<% unless @groups.blank? %>
+<table>
+  <tr>
+    <td class="tree">
+      <ul>
+      <% @groups.each do |group| %>
+        <li style="list-style:none;">
+        <% unless group.child_groups.blank? %>
+          <span onclick="Node_Click('tree_<%= group.id %>','open<%= group.id %>','close<%= group.id %>')">
+            <%= image_tag("cl_minous.png", {:id => "close#{group.id}", :style => "width:10px;length:10px;display:none;"}) %>
+            <%= image_tag("op_plus.png", {:id => "open#{group.id}", :style => "width:10px;length:10px;"}) %>
+          </span>
+        <% else %>
+          <%= image_tag("cl_minous.png", :alt => "") %>
+        <% end %>
+        <%= link_to group.name, org_group_path(group) %>
+        <% unless group.child_groups.blank? %>
+          <div>
+            <span id="tree_<%= group.id %>" style="display:none;">
+            <% second_num = group.child_groups.count %>
+            <% group.child_groups.each_with_index do |group, i| %>
+              <li style="list-style:none;">
+                <% if i < second_num - 1 %>
+                  <%= image_tag("blanch_t.png", :alt => "") %>
+                <% else %>
+                  <%= image_tag("blanch_l.png", :alt => "") %>
+                <% end %>
+                <% unless group.child_groups.blank? %>
+                  <span onclick="Node_Click('tree_<%= group.id %>','open<%= group.id %>','close<%= group.id %>')">
+                  <%= image_tag("cl_minous.png", {:id => "close#{group.id}", :style => "width:10px;length:10px;display:none;"}) %>
+                  <%= image_tag("op_plus.png", {:id => "open#{group.id}", :style => "width:10px;length:10px;"}) %>
+                  </span>
+                <% else %>
+                  <%= image_tag("cl_minous.png", :alt => "") %>
+                <% end %>
+                <%= link_to group.name, org_group_path(group) %>
+                <% unless group.child_groups.blank? %>
+                  <div>
+                    <span id="tree_<%= group.id %>" style="display:none;">
+                      <% third_num = group.child_groups.count %>
+                      <% group.child_groups.each_with_index do |group, j| %>
+                        <li style="list-style:none;">
+                          <% if j < third_num - 1 %>
+                            <%= image_tag("blanch_t.png", {:alt => "", :style => "margin-left:28px;"}) %>
+                          <% else %>
+                            <%= image_tag("blanch_l.png", {:alt => "", :style => "margin-left:28px;"}) %>
+                          <% end %>
+                          <%= link_to group.name, org_group_path(group) %>
+                        </li>
+                      <% end %>
+                    </span>
+                  </div>
+                <% end %>
+              </li>
+            <% end %>
+            </span>
+          </div>
+        <% end %>
+        </li>
+        <% end %>
+      </ul>
+    </td>
+  </tr>
+</table>
+<% end %>
+<%= link_to "新規作成", new_org_group_path %>
+

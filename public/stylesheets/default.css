@@ -1,0 +1,600 @@
+
+root { 
+    display: block;
+}
+
+html
+{
+	height: 100%;
+	overflow-y: scroll;
+}
+
+
+body {
+  	height: 100%;
+    background-color: #ffffdd;
+}
+
+/*==========================================================
+#2	リンク
+==========================================================*/
+a:link
+{
+	color: #cc442F;
+	text-decoration: none;
+}
+a:visited
+{
+	color: #99442F;
+	text-decoration: none;
+}
+a:hover,
+a:active
+{
+	color: #cc442F;
+	text-decoration: underline;
+}
+
+
+/*==========================================================
+#2	見出し
+==========================================================*/
+h1
+{
+	font-size: 26px;
+}
+h2
+{
+	font-size: 21px;
+}
+h3
+{
+	font-size: 16px;
+}
+h4
+{
+	font-size: 15px;
+}
+h5
+{
+	font-size: 14px;
+}
+h6
+{
+	font-size: 13px;
+}
+
+/*******************************************************************************
+#1	ヘッダコンテナCSS
+*******************************************************************************/
+/*==========================================================
+#2	コンテナ
+==========================================================*/
+
+#container-header {
+	height: 100px;
+  background-color: #ffdf5f;
+  color: orange;
+}
+
+
+/*******************************************************************************
+#1	基本コンテナCSS
+*******************************************************************************/
+/*==========================================================
+#2	コンテナ
+==========================================================*/
+#container-base
+{
+	width: 904px;
+	min-height: 100%;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #ffffff;
+
+	/* IE6対策 */
+	height: auto !important;
+	height: 100%;
+}
+
+/*******************************************************************************
+#1	bodyコンテナCSS
+*******************************************************************************/
+/*==========================================================
+#2	コンテナ
+==========================================================*/
+
+#container-body
+{
+  width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #ffffff;
+
+  /* IE6対策 */
+	height: auto !important;
+	height: 100%;
+}
+
+a {
+	color: #777777;
+}
+
+/*******************************************************************************
+#1	サイドコンテナCSS
+*******************************************************************************/
+/*==========================================================
+#2	コンテナ
+==========================================================*/
+
+#container-side {
+  width: 190px;
+  float: left;
+  background-color: #ffff99;
+  padding-top:15px;
+}
+
+#container-side ul.top{
+  list-style-type: square;
+  font-size: 18px;
+}
+#container-side ul.middle{
+  margin-left: 8px;
+  list-style-type: circle;
+  font-size: 14px;
+}
+#container-side li.middle{
+  margin-bottom: 10px;
+}
+
+/*******************************************************************************
+#1	メインコンテナCSS
+*******************************************************************************/
+/*==========================================================
+#2	コンテナ
+==========================================================*/
+
+#container-main {
+  width: 680px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-right: 3px;
+  float: right;
+  background-color: #ffffff;
+  text-align: left;
+  font-size: 14px;
+}
+
+#container-main span.login_menu {
+  border: solid 1px #888;
+  padding: 1em;
+}
+
+#container-main ul.login_menu_list {
+  list-style: none;
+}
+
+#container-main ul.login_menu_list li {
+  margin-bottom: 2em;
+}
+
+#container-main p.logout {
+  float: right;
+  border: solid 1px #888;
+  padding: 1em;
+}
+
+
+
+/*******************************************************************************
+#1	フッタコンテナCSS
+*******************************************************************************/
+/*==========================================================
+#2	コンテナ
+==========================================================*/
+
+#container-footer {
+  font-size: 14px;
+	height: 80px;
+  background-color: #ffdf5f;
+  text-align: center;
+}
+
+#container-footer ul{
+  list-style: none;
+}
+#container-footer li{
+  margin-top: 30px;
+  margin-left:10px;
+  float: left;
+}
+
+div.clear {
+  clear: both;
+}
+
+/*******************************************************************************
+#1	団体登録
+*******************************************************************************/
+/*==========================================================
+#1	テーブル
+==========================================================*/
+
+table.organize th{
+	background-color: #feecb4;
+	width: 230px;
+	border: solid 1px #111;
+	height: 50px;
+}
+
+table.organize td{
+	width: 300px;
+	border: solid 1px #111;
+	padding-left: 5px;
+}
+
+#container-main table.org_info{
+  margin-left: 20px;
+  font-size: 15px;
+}
+#container-main table.org_info th{
+  border-style: none;
+  width: 120px;
+  text-align: left;
+}
+#container-main table.org_info td{
+  border-style: none;
+  width: 140px
+}
+
+#container-main table.org_list th{
+  border: solid 1px #111111;
+  background-color: #feecb4;
+}
+
+#container-main table.org_list td{
+  border: solid 1px #111111;
+}
+
+/*******************************************************************************
+#1	ユーザー管理
+*******************************************************************************/
+/*==========================================================
+#1	テーブル
+==========================================================*/
+table.user th{
+  width: 150px;
+	background-color: #feecb4;
+	border: solid 1px #111;
+	height: 50px;
+  text-align: center;
+}
+
+table.user td{
+  width: 250px;
+	border: solid 1px #111;
+	padding-left: 5px;
+}
+
+#container-main th.result_th{
+  font-size: 14px;
+  border-style: none;
+  background-color: #feecb4;
+  text-align: center;
+  border: solid 1px #111111;
+}
+#container-main td.result_td1{
+  font-size: 14px;
+  border-style: none;
+  width: 50px;
+  text-align: center;
+  border: solid 1px #111111;
+}
+#container-main td.result_td2{
+  font-size: 14px;
+  border-style: none;
+  width: 150px;
+  text-align: center;
+  border: solid 1px #111111;
+}
+#container-main td.result_td3 {
+  font-size: 13px;
+  border-style: none;
+  width: 120px;
+  text-align: center;
+  border: solid 1px #111111;
+}
+
+#container-main table.user_info{
+  margin-left: 20px;
+  font-size: 14px;
+}
+#container-main table.user_info th{
+  border-style: none;
+  width: 100px;
+  text-align: left;
+}
+#container-main table.user_info td{
+  border-style: none;
+  width: 130px
+}
+
+#container-main td.recipients_td1{
+  border-style: none;
+  width: 130px;
+  text-align: center;
+}
+#container-main td.recipients_td2{
+  border-style: none;
+  width: 150px;
+  text-align: center;
+}
+#container-main td.recipients_td3 {
+  border-style: none;
+  width: 70px;
+  text-align: center;
+}
+
+td.userflow_td1{
+  color: #ae5a21;
+  font-weight: bold;
+  font-size: 20px;
+  border-style: none;
+  vertical-align:middle;
+  text-align: center;
+  padding:8px;
+}
+td.userflow_td2{
+  border-style: none;
+  vertical-align:middle;
+  text-align: center;
+  padding:8px;
+}
+td.userflow_td3 {
+  font-size: 14px;
+  border-style: none;
+  vertical-align:middle;
+  text-align: center;
+  padding:8px;
+}
+
+/*******************************************************************************
+#1	グループ管理
+*******************************************************************************/
+/*==========================================================
+#1	テーブル
+==========================================================*/
+#container-main td.tree{
+  border-style: none;
+}
+
+#container-main td.group_td1{
+  border-left: solid 1px #111111;
+  border-right: solid 1px #111111;
+  text-align: center;
+}
+
+#container-main td.group_td2{
+  border-left: solid 1px #111111;
+  border-right: solid 1px #111111;
+  border-bottom: solid 1px #111111;
+  text-align: center;
+}
+
+#container-main th.group_th1{
+  border: solid 1px #111111;
+  width: 120px;
+  text-align: center;
+  background-color: #feecb4;
+}
+#container-main th.group_th2{
+  border: solid 1px #111111;
+  width: 150px;
+  text-align: center;
+  background-color: #feecb4;
+}
+#container-main th.group_th3{
+  border: solid 1px #111111;
+  width: 180px;
+  text-align: center;
+  background-color: #feecb4;
+}
+
+#container-main table.group_show th{
+  border: solid 1px #111111;
+  text-align: center;
+  background-color: #feecb4;
+  width: 150px;
+}
+#container-main table.group_show td{
+  border: solid 1px #111111;
+}
+
+#container-main table.group_form th{
+  border: solid 1px #111111;
+  background-color: #feecb4;
+  width:  300px;
+}
+#container-main table.group_form td{
+  border: solid 1px #111111;
+}
+
+
+/*******************************************************************************
+#1	管理者
+*******************************************************************************/
+/*==========================================================
+#1	テーブル
+==========================================================*/
+
+#container-main table.admin_list th{
+  border: solid 1px #111111;
+  background-color: #feecb4;
+}
+
+#container-main td.admin_list_td1{
+  border: solid 1px #111111;
+  width: 250px;
+  text-align: center;
+}
+#container-main td.admin_list_td2{
+  border: solid 1px #111111;
+  width: 250px;
+  text-align: center;
+}
+
+
+/*******************************************************************************
+#1	メール管理
+*******************************************************************************/
+/*==========================================================
+#1	テーブル
+==========================================================*/
+
+#container-main table.mail_form th{
+  border: solid 1px #111111;
+  background-color: #feecb4;
+  text-align: left;
+  padding-left: 20px;
+  padding-top:  5px;
+  padding-bottom:  5px;
+}
+
+#container-main table.mail_form td{
+  border: solid 1px #111111;
+  width: 440px;
+  text-align: left;
+  padding: 15px;
+}
+
+#container-main table.mail_confirm th{
+  border: solid 1px #111111;
+  background-color: #feecb4;
+}
+
+#container-main table.mail_confirm td{
+  border: solid 1px #111111;
+  padding: 5px;
+  width: 450px;
+}
+
+#container-main table.mail_list th{
+  border: solid 1px #111111;
+  background-color: #feecb4;
+  text-align: center;
+}
+#container-main td.mail_list_td1{
+  border: solid 1px #111111;
+  width: 150px;
+  text-align: center;
+  padding: 5px;
+}
+#container-main td.mail_list_td2{
+  border: solid 1px #111111;
+  width: 120px;
+  text-align: left;
+  padding: 5px;
+  font-size: 13px;
+}
+#container-main td.mail_list_td3 {
+  border: solid 1px #111111;
+  width: 120px;
+  text-align: left;
+  padding: 5px;
+  font-size: 13px;
+}
+
+#container-main table.deli_result{
+  margin-top: 3px;
+}
+#container-main table.deli_result th{
+  background-color: #feecb4;
+}
+#container-main table.deli_result td{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+
+/* -----------------------------
+ * ユーザーグループ変更  
+ * -----------------------------*/
+#container-main div#user_result {
+   width: 500px;
+   margin-left: 60px;
+   margin-bottom: 25px;
+ } 
+
+ #container-main div#group_operation { 
+   width: 150px; 
+   float: left;  
+   margin-top: 150px;  
+   margin-bottom: auto; 
+   text-align: right; 
+ } 
+
+ #container-main div#group_moving_point { 
+   width: 200px; 
+   float: left;  
+ } 
+
+
+/*******************************************************************************
+#1	受信者　携帯用
+*******************************************************************************/
+/*==========================================================
+#1	テーブル
+==========================================================*/
+#container-main table.rec_mobile th,
+#container-main table.rec_mobile td{
+	background-color: #feecb4;
+	width: 210px;
+	border: solid 1px #111;
+	height: 50px;
+  text-align: left;
+}
+
+#container-side ul.rec_mobile{
+  margin-left: 2px;
+  list-style-type: circle;
+  font-size: 12px;
+}
+#container-side li.rec_mobile{
+  margin-bottom: 10px;
+}
+
+
+
+div.mail_group {
+  width: 300px;
+  border: solid 1px #888;
+  padding: 1em;
+  background-color: #feecb4;
+}
+
+
+table.delivery_group td{
+  vertical-align: top;
+  border: solid 1px #111;
+  background-color: #ffffff
+}
+
+div.top_group {
+  padding-left: 1px;
+}
+
+div.second_group {
+  padding-left: 20px;
+}
+
+div.third_group {
+  padding-left: 40px;
+}
+
+div.mail_summary {
+  float: left;
+  border: solid 1px #888;
+  padding: 1em;
+}
+

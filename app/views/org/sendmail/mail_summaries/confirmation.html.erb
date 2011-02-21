@@ -1,0 +1,121 @@
+<table>
+  <tr>
+    <td class="userflow_td3">件名・本文<br />作成</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">送信先・日時<br />設定</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td1">メール<br />作成確認</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">メール<br />作成完了</td>
+  </tr>
+</table>
+<% form_for(@mail_summary, :url => confirmation_params[:url], :html => {:method => confirmation_params[:method]}) do |f| %>
+  <h1>メール作成確認</h1>
+  <%= f.submit "戻る", :name => 'cancel' %><br /><br />
+  <%= f.error_messages.untaint %>
+  <table class="mail_confirm">
+    <tr>
+      <th>件名</th>
+      <td>
+        <%= @mail_summary.subject %>
+      </td>
+    </tr>
+    <tr>
+      <th>本文</th>
+      <td>
+        <pre><%= @mail_summary.body %></pre>
+      </td>
+    </tr>
+    <tr>
+      <th>回答選択肢</th>
+      <td>
+        <% i=1 %>
+        <% @selection_bodies.each do |body| %>
+          <% if body != "" %>
+            <%= i %>.<%= body %><% i+=1 %><br /><br />
+          <% end %>
+          <%= hidden_field_tag "selection[]", body %>
+        <% end %>
+      </td>
+    </tr>
+    <% unless @mail_summary.address_for_map.blank? %>
+      <tr>
+        <th style="vertical-align: top;">地図用住所</th>
+        <td>
+          <%= @mail_summary.address_for_map %><br /><br />
+          (メールに貼り付けされる地図へのURL)<br />
+          <%= "http://maps.google.co.jp/maps?f=q&source=s_q&hl=ja&geocode=&q=" + @mail_summary.address_for_map %><br /><br />
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <th>送信先</th>
+      <td>
+        <% if @mail_summary.all_send && @mail_summary.all_send == 1 %>
+          全体
+        <% else %>
+          <% if @check_groups.present? %>
+            <% @check_groups.each do |group| %>
+              <%= group.full_name %>
+              <%= hidden_field_tag "mail_group[]", group.id %><br />
+            <% end %>
+          <% end %>
+          <% if @check_users.present? %>
+            <% @check_users.each do |user| %>
+              <%= user.name %>
+              <%= hidden_field_tag "mail_user[]", user.id %><br />
+            <% end %>
+          <% end %>
+          <% if @check_recipients.present? %>
+            <% @check_recipients.each do |recipient| %>
+              <%= recipient.name %>
+              <%= hidden_field_tag "mail_recipient[]", recipient.id %><br />
+            <% end %>
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <th>区分</th>
+      <td>
+        <% if @mail_summary.relation %>
+          <% if @mail_summary.relation == 0 %>
+            指定なし
+          <% elsif @mail_summary.relation == 1 %>
+            本人
+          <% elsif @mail_summary.relation == 2 %>
+            本人以外
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <th>送信予約日時</th>
+      <td>
+        <%= params[:select_delivery] == "1" ? "予約送信" : "即時配信　" %>
+        <%= hidden_field_tag :select_delivery, params[:select_delivery] %>
+        <% if @mail_summary.delivery_reserve_time && params[:select_delivery] == "1" %>
+          <%= @mail_summary.delivery_reserve_time.delivery_reserve_time.strftime("%Y/%m/%d %H:%M") %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+  <br />
+  <% fields_for "mail_summary[delivery_reserve_time_attributes]", @mail_summary.delivery_reserve_time do |drtf| -%>
+    <%= drtf.hidden_field :delivery_reserve_time -%>
+  <% end -%>
+  <%= f.hidden_field :subject %>
+  <%= f.hidden_field :body %>
+  <%= f.hidden_field :all_send %>
+  <%= f.hidden_field :relation %>
+  <%#= f.hidden_field :address_for_map %>
+  <span style="float:left;">
+    <%= f.submit "保存" %>
+  </span>
+  <% if params[:select_delivery] == "0" %>
+  <span style="float:left;margin-left:20px;">
+    <%= f.submit "送信", :name=>'just_delivery' %>
+  </span>
+  <% end %>
+<% end %>
+

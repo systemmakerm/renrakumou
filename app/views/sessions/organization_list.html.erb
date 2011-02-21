@@ -1,0 +1,21 @@
+<h2>
+  <%= @accounts.count > 1 ? "ログイン団体選択" : ""  %>
+</h2>
+<h3>
+  <%= @accounts.count > 1 ? "ログインする団体をクリックして下さい" : "団体名をクリックしてください"  %>
+</h3>
+
+<% case @accounts.last.status -%>
+<% when 0 -%>
+  <%= render :partial => "org_leader_org_list" %>
+<% when 1 -%>
+  <%= render :partial => "org_leader_org_list" %>
+<% when 2 -%>
+  <%= render :partial => "admin_org_list" %>
+<% when 3 -%>
+  <%= render :partial => "recipient_org_list" %>
+<% when 4 -%>
+  <%= render :partial => "recipient_org_list" %>
+<% end -%>
+<br /><br />
+<%= link_to "戻る", new_session_path %>

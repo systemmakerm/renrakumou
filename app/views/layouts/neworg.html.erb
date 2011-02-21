@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <%= stylesheet_link_tag 'default', :media => 'screen' %>
+    <title>連絡網</title>
+    <meta name="robots" content="INDEX,FOLLOW" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <%= javascript_include_tag :defaults %>
+  </head>
+  <body>
+    <!--******************** container-base stt ********************-->
+    <div id="container-body">
+
+      <!--******************** container-header stt ********************-->
+      <div id="container-header">
+        <span style="color:#8B4500;font-size:37px;float:left; margin:25px;">
+          連絡網
+        </span>
+        <br /><br /><br />
+        <span style="color:red;float:right;margin-right:10px;margin-top:10px;">
+          連絡網
+        </span>
+      </div>
+      <!--******************** container-header end ********************-->
+
+      <!--******************** container-main stt ********************-->
+      <div id="container-main">
+        <%= yield %>
+      </div>
+      <!--******************** container-main end ********************-->
+
+      <!--******************** container-side stt ********************-->
+      <!--******************** container-side end ********************-->
+
+      <div class="clear"></div>
+
+      <!--******************** container-footer stt ********************-->
+      <div id="container-footer">
+        <ul>
+          <li><a href="">お問い合わせ</a></li>
+          <li>|</li>
+          <li><a href="">プライバシーポリシー</a></li>
+          <li>|</li>
+          <li><a href="">ディスクロージャーポリシー</a></li>
+          <li>|</li>
+          <li><a href="">サイトご利用方法</a></li>
+          <li>|</li>
+          <li><a href="">免責事項</a></li>
+        </ul>
+      </div>
+      <!--******************** container-footer end ********************-->
+    </div>
+
+    <!--******************** container-base end ********************-->
+  </body>
+</html>

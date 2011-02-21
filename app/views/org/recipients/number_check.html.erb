@@ -1,0 +1,14 @@
+<h1>連絡網システム</h1>
+
+<% form_tag number_confirm_org_recipients_path do -%>
+<span style="color:red">
+  <%= flash[:error] %>
+</span>
+<p><%= label_tag '登録番号' %><br />
+<%= text_field_tag :number %></p>
+
+<%= hidden_field_tag :id, params[:id] %>
+<%= hidden_field_tag :organization_id, params[:organization_id] %>
+
+<p><%= submit_tag '受信者登録へ' %></p>
+<% end -%>

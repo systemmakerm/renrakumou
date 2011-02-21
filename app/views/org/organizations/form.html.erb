@@ -1,0 +1,56 @@
+<table>
+  <tr>
+    <td class="userflow_td1">団体登録</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">団体登録確認</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">団体<br />仮登録完了</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">団体仮登録<br />完了メール</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">団体<br />本登録完了</td>
+  </tr>
+</table>
+<% form_for(@account, :url => form_params[:url], :html => {:method => :post}) do |f| %>
+  <h1>団体登録</h1>
+  <%= f.error_messages.untaint %>
+  <%= logged_in? ? link_to("団体一覧に戻る",org_list_org_organizations_path) : link_to("戻る", root_path) %>
+  <br /><br />
+  <span style="color: red;">(＊)は必須入力</span>
+  <% params[:account] ? organization = @account.build_organization(params[:account][:organizations_attributes]) : @account.build_organization %>
+  <% fields_for 'account[organizations_attributes]', organization do |of| -%>
+    <%= render :partial => "org_form", :locals => {:of => of} %>
+  <% end %>
+    <table class="organize">
+      <tr>
+        <th>メールアドレス<span style="color: red;">(＊)</span></th>
+        <td>
+          <%= f.text_field :login %>
+        </td>
+      </tr>
+      <tr>
+        <th>確認用メールアドレス<span style="color: red;">(＊)</span></th>
+        <td>
+          <%= f.text_field :login_confirmation %>
+        </td>
+      </tr>
+    </table>
+    ※パスワードは6文字以上でお願いします。
+    <table class="organize">
+      <tr>
+        <th>パスワード<span style="color: red;">(＊)</span></th>
+        <td>
+          <%= f.password_field :password %><br />
+        </td>
+      </tr>
+      <tr>
+        <th>確認用パスワード<span style="color: red;">(＊)</span></th>
+        <td>
+          <%= f.password_field :password_confirmation %>
+        </td>
+      </tr>
+  </table>
+  <br />
+  <%= f.submit "確認" %>
+<% end %>
+

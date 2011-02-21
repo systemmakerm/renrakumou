@@ -1,0 +1,24 @@
+<h1>メールアドレス・パスワード変更確認</h1>
+<br /><br />
+<%= render :partial => "org_information" %>
+<% form_for(@account, :url => create_and_change_account_org_organizations_path, :html => {:method => :post}) do |f| %>  
+  <%= f.submit "戻る", :name => 'cancel' %>
+  <br /><br />
+  <table class="organize">
+    <tr>
+      <th>メールアドレス</th>
+      <td>
+        <%= params[:account][:login] %>
+      </td>
+    </tr>
+  </table>
+  <%= f.hidden_field :login %>
+  <%= f.hidden_field :login_confirmation %>
+  <%= f.hidden_field :password %>
+  <%= f.hidden_field :password_confirmation %>
+  <%= hidden_field_tag :id, @organization.id %>
+  <br /><br />
+  <%= f.submit "保存" %>
+<% end %>
+
+

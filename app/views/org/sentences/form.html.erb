@@ -1,0 +1,112 @@
+<h1>メールひな形<%= @sentence.new_record? ? "登録" : "編集" %></h1>
+<%= @sentence.new_record? ? link_to("一覧に戻る", org_sentences_path) : link_to("戻る", org_sentence_path(@sentence)) %>
+<br /><br />
+<% form_for @sentence, :url => form_params[:url], :html => {:method => form_params[:method]} do |f| %>
+  <%= f.error_messages.untaint %>
+<table class="group_form">
+<tr>
+  <th>上位グループ選択</th>
+  <th>件名.本文</th>
+</tr>
+<tr>
+  <td>
+  <br />
+  <span style="margin-left:35px;">
+  <% unless @sentences.blank? %>
+    <%= radio_button_tag "sentence[parent_sentence_id]", 0, parent_id?(0, @parent_sentence_id), :id=>"sentence_0" %><%= label_tag "sentence_0", "指定なし" %>
+  <% else %>
+    未作成
+    <%= hidden_field_tag "sentence[parent_sentence_id]", 0 %>
+  <% end %>
+  </span>
+  <br /><br />
+  <% unless @sentences.blank? %>
+    <ul>
+    <% @sentences.each do |sentence| %>
+      <li style="list-style:none;">
+      <% unless sentence.child_sentences.blank? %>
+        <span onclick="Node_Click('tree_<%= sentence.id %>','open<%= sentence.id %>','close<%= sentence.id %>')">
+        <%= image_tag("cl_minous.png", {:id => "close#{sentence.id}", :style => "width:10px;length:10px;display:none;"}) %>
+        <%= image_tag("op_plus.png", {:id => "open#{sentence.id}", :style => "width:10px;length:10px;"}) %>
+        </span>
+      <% else %>
+        <%= image_tag("cl_minous.png", :alt => "") %>
+      <% end %>
+      <% if @sentence.new_record? || (!@sentence.new_record? && sentence.id != @sentence.id) %>
+        <%= radio_button_tag "sentence[parent_sentence_id]", sentence.id, parent_id?(sentence.id, @parent_sentence_id), :id=>"sentence_#{sentence.id}" %>
+      <% else %>
+        <span style="margin-left:5px;">
+        <%= "　" %>
+        </span>
+      <% end %>
+      <%= label_tag "sentence_#{sentence.id}", h(sentence.group_name) %>
+      <% unless sentence.child_sentences.blank? %>
+        <div>
+        <span id='tree_<%= sentence.id %>' style='display:none'>
+        <% second_num = sentence.child_sentences.count %>
+        <% sentence.child_sentences.each_with_index do |sentence, i| %>
+          <li style="list-style:none;">
+          <% if i < second_num - 1 %>
+            <%= image_tag("blanch_t.png", :alt => "") %>
+          <% else %>
+            <%= image_tag("blanch_l.png", :alt => "") %>
+          <% end %>
+          <% unless sentence.child_sentences.blank? %>
+            <span onclick="Node_Click('tree_<%= sentence.id %>','open<%= sentence.id %>','close<%= sentence.id %>')">
+            <%= image_tag("cl_minous.png", {:id => "close#{sentence.id}", :style => "width:10px;length:10px;display:none;"}) %>
+            <%= image_tag("op_plus.png", {:id => "open#{sentence.id}", :style => "width:10px;length:10px;"}) %>
+            </span>
+          <% else %>
+            <%= image_tag("cl_minous.png", :alt => "") %>
+          <% end %>
+          <% if @sentence.new_record? || (!@sentence.new_record? && sentence.id != @sentence.id) %>
+            <%= radio_button_tag "sentence[parent_sentence_id]", sentence.id, parent_id?(sentence.id, @parent_sentence_id), :id=>"sentence_#{sentence.id}" %>
+          <% else %>
+            <span style="margin-left:5px;">
+              <%= "　" %>
+            </span>
+          <% end %>
+          <%= label_tag "sentence_#{sentence.id}", h(sentence.group_name) %>
+          <% unless sentence.child_sentences.blank? %>
+            <div>
+            <span id='tree_<%= sentence.id %>' style='display:none'>
+            <% third_num = sentence.child_sentences.count %>
+            <% sentence.child_sentences.each_with_index do |sentence, j| %>
+              <li style="list-style:none;">
+              <% if j < third_num - 1 %>
+                <%= image_tag("blanch_t.png", {:alt => "", :style => "margin-left:28px;"}) %>
+              <% else %>
+                <%= image_tag("blanch_l.png", {:alt => "", :style => "margin-left:28px;"}) %>
+              <% end %>
+              <%= sentence.subject %>
+             </li>
+            <% end %>
+            </span>
+            </div>
+          <% end %>
+          </li>
+        <% end %>
+        </span>
+        </div>
+      <% end %>
+      </li>
+      <% end %>
+    </ul>
+  <% end %>
+  </td>
+  <td style="padding: 20px;">
+    メールひな形グループ名：<br />
+    <%= f.text_field :group_name,  :size => "47" %><br /><br /><br />
+    件名：<br />
+    <%= f.text_field :subject,  :size => "47" %><br /><br /><br />
+    本文：<br />
+    <%= f.text_area :body, :cols => "32",:rows => "15" %><br />
+  </td>
+</tr>
+</table>
+
+  <br /><br />
+  <%= f.submit "保存" %>
+<% end %>
+
+

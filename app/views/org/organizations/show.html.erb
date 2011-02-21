@@ -1,0 +1,71 @@
+<% if current_account && current_account.status == 0 %>
+  <h1>団体明細</h1>
+  <%= link_to "団体一覧に戻る", org_list_org_organizations_path %>
+  <br />
+<% end %>
+<table>
+  <tr>
+    <th>有効期限：</th>
+    <td><%= @organization.valid_date.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>ご登録日時：</th>
+    <td><%= @organization.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+</table>
+<table class="organize">
+  <tr>
+    <th>団体名</th>
+    <td><%= @organization.name -%></td>
+  </tr>
+  <tr>
+    <th>使用目的</th>
+    <td><%= @organization.purpose %><br /></td>
+  </tr>
+  <tr>
+    <th>代表者名</th>
+    <td><%= @organization.leader_name %></td>
+  </tr>
+  <tr>
+    <th>フリガナ</th>
+    <td><%= @organization.kana %></td>
+  </tr>
+  <tr>
+    <th>性別</th>
+    <td><%= @organization.leader_sex? unless @organization.sex.nil? %></td>
+  </tr>
+  <tr>
+    <th>郵便番号</th>
+    <td><%= @organization.zip %></td>
+  </tr>
+  <tr>
+    <th>都道府県</th>
+    <td><%= @organization.prefecture %></td>
+  </tr>
+  <tr>
+    <th>住所1</th>
+    <td><%= @organization.address1 %></td>
+  </tr>
+  <tr>
+    <th>住所2</th>
+    <td><%= @organization.address2 %></td>
+  </tr>
+  <tr>
+    <th>TEL</th>
+    <td><%= @organization.tel %></td>
+  </tr>
+  <tr>
+    <th>FAX</th>
+    <td><%= @organization.fax %></td>
+  </tr>
+  <tr>
+    <th>メールアドレス</th>
+    <td><%= @organization.account.login %></td>
+  </tr>
+</table>
+<br /><br />
+<% if current_account && current_account.status == 0 %>
+  <span style="float:left">
+    <%= link_to "編集", edit_org_organization_path(@organization) %>
+  </span>
+<% end %>

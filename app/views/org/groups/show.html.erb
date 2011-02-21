@@ -1,0 +1,44 @@
+<h1>グループ明細</h1>
+<span style="color:green"><pre><%= flash[:notice] %></pre></span>
+<%= link_to "グループ一覧へ", org_groups_path %>
+<br /><br />
+<table class="group_show">
+  <tr>
+    <th>上位グループ</th>
+    <th>グループ名</th>
+    <th>下位グループ</th>
+  </tr>
+  <tr>
+    <td style="text-align:right;">
+      <%= @group.parent_id == 0 ? "なし" : @group.parent_name %>
+    </td>
+    <td style="text-align:center">
+      <%= @group.name %>
+    </td>
+    <td style="text-align:left">
+      <% if @group.child_groups %>
+        <% @group.child_groups.each do |child| %>
+          <%= child.full_name %><br />
+          <% if child.child_groups %>
+            <% child.child_groups.each do |grand_child| %>
+              <%= grand_child.full_name %><br />
+            <% end %>
+          <% end %>
+        <% end %>
+      <% else %>
+        なし
+      <% end %>
+    </td>
+  </tr>
+</table>
+<br /><br />
+<span style="float: left;">
+<%= link_to "編集", edit_org_group_path(@group), :class=>"float-left" %>
+</span>
+<% form_tag(delete_org_groups_path) do %>
+  <%= hidden_field_tag :id, @group.id %>
+  <span style="float: left; margin-left:20px;">
+    <%= submit_tag '削除', :confirm=>"グループ「#{@group.full_name}」およびその下位グループが削除されます。よろしいですか？" %>
+  </span>
+<% end %>
+

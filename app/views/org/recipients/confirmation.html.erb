@@ -1,0 +1,27 @@
+<h1>受信者編集確認</h1>
+<%= render :partial => "/share/user/user_info", :locals => {:user => @user} %>
+<% form_for(@account, :url => confirmation_params[:url], :html => {:method => confirmation_params[:method]}) do |f| %>    
+  <%= f.error_messages.untaint %><br />
+  <%= f.submit "戻る", :name => "cancel"  %>
+  <br /><br />
+  <%= render :partial => "/share/recipient/recipient_confirmation", :locals => {:recipient => @account.recipient} %>
+  <table class="organize">
+    <tr>
+      <th>メールアドレス</th>
+      <td><%= @account.login %></td>
+    </tr>
+  </table>
+  <br />
+  <%= f.hidden_field :login %>
+  <%= f.hidden_field :login_confirmation %>
+  <%= f.hidden_field :password %>
+  <%= f.hidden_field :password_confirmation %>
+  <%= hidden_field_tag "account[recipient_attributes][organization_id]", @account.recipient.organization_id %>
+  <%= hidden_field_tag "account[recipient_attributes][user_id]", @account.recipient.user_id %>
+  <%= hidden_field_tag "account[recipient_attributes][name]", @account.recipient.name %>
+  <%= hidden_field_tag "account[recipient_attributes][tel1]", @account.recipient.tel1 %>
+  <%= hidden_field_tag "account[recipient_attributes][tel2]", @account.recipient.tel2 %>
+  <%= hidden_field_tag "account[recipient_attributes][relation]", @account.recipient.relation %>
+  <%= f.submit "保存" %>
+<% end %>
+

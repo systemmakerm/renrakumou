@@ -1,0 +1,84 @@
+<table>
+  <tr>
+    <td>件名・本文<br />作成</td>
+    <td>&gt;</td>
+    <td>送信先・日時<br />設定</td>
+    <td>&gt;</td>
+    <td>メール<br />作成確認</td>
+    <td>&gt;</td>
+    <td>メール<br />作成完了</td>
+  </tr>
+</table>
+
+<% form_for(@mail_summary, :url => form_params[:url], :html => {:method => :post}) do |f| -%>
+  <h1>メール件名・本文<%= @mail_summary.new_record? ? "作成" : "編集" %></h1>
+  <%= f.error_messages.untaint %>
+  <span style="color: red;">(＊)は必須入力</span>
+  <table class="mail_form">
+    <tr>
+      <th>件名<span style="color: red;">(*)</span></th>
+    </tr>
+    <tr>
+      <td>
+        <%= f.text_field :subject %>
+      </td>
+    </tr>
+    <tr>
+      <th>本文<span style="color: red;">(*)</span></th>
+    </tr>
+    <tr>
+      <td>
+        <%= f.text_area :body, :rows => 10 %>
+      </td>
+    </tr>
+    <tr>
+      <th>回答選択肢</th>
+    </tr>
+    <tr>
+      <td>
+        <% @selection_bodies.each_with_index do |selection_body, index| -%>
+          <%= index+1 %><%= text_field_tag "selection[]", selection_body %><br />
+        <% end -%>
+      </td>
+    </tr>
+    <!--
+    <tr>
+      <th>地図用住所</th>
+    </tr>
+    <tr>
+      <td style="text-align:right">
+        <%#= f.text_field :address_for_map, :size => 47 %>
+          <input type="text" width="80" name="address"></input>
+          <input type="button" value="GoogleMap取得"
+            onclick="showAddress(address)"></input>
+      </td>
+    </tr>
+    -->
+  </table>
+  <br />
+  <% if @check_groups.present? -%>
+    <% @check_groups.each do |group| -%>
+      <%= hidden_field_tag "mail_group[]", group.id %>
+    <% end -%>
+  <% end -%>
+  <% if @check_users.present? -%>
+    <% @check_users.each do |user| -%>
+      <%= hidden_field_tag "mail_user[]", user.id %>
+    <% end -%>
+  <% end -%>
+  <% if @check_recipients.present? -%>
+    <% @check_recipients.each do |recipient| -%>
+      <%= hidden_field_tag "mail_recipient[]", recipient.id %>
+    <% end -%>
+  <% end -%>
+
+  <%= hidden_field_tag :select_delivery, @select_delivery %>
+
+  <% if @mail_summary.delivery_reserve_time.present? -%>
+    <% fields_for "mail_summary[delivery_reserve_time_attributes]", @mail_summary.delivery_reserve_time do |drtf| -%>
+      <%= drtf.hidden_field :delivery_reserve_time -%>
+    <% end -%>
+  <% end -%>
+  <%= f.submit "送信先・日時設定へ" %>
+<% end -%>
+

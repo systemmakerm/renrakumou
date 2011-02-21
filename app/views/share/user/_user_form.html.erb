@@ -1,0 +1,80 @@
+<span style="color: red;">(＊)は必須入力</span>
+<table class="user">
+  <tr>
+    <th>登録番号<span style="color: red;">(＊)</span></th>
+    <td><%= f.text_field :number %></td>
+  </tr>
+  <tr>
+    <th>ユーザー名<span style="color: red;">(＊)</span></th>
+    <td><%= f.text_field :name %></td>
+  </tr>
+  <tr>
+    <th>メモ</th>
+    <td><%= f.text_area :memo, :cols => 17, :rows => 1.5 %></td>
+  </tr>
+  <% unless @user.group_pickup.blank? %>
+    <tr>
+      <th>グループ</th>
+      <td>
+      <% params[:user_group].blank? ? group_ids = @group_ids : group_ids = params[:user_group] %>
+      <ul>
+      <% @user.group_pickup.each do |group| %>
+        <li style="list-style:none;">
+        <% unless group.child_groups.blank? %>
+          <span onclick="Node_Click('tree_<%= group.id %>','open<%= group.id %>','close<%= group.id %>')">
+          <%= image_tag("cl_minous.png", {:id => "close#{group.id}", :style => "width:10px;length:10px;display:none;"}) %>
+          <%= image_tag("op_plus.png", {:id => "open#{group.id}", :style => "width:10px;length:10px;"}) %>
+          </span>
+        <% else %>
+          <%= image_tag("cl_minous.png", :alt => "") %>
+        <% end %>
+        <%= check_box_tag "user_group[]", group.id, checkbox_is_selected?(group_ids, group.id), :id =>"group_#{group.id}" %>
+        <%= label_tag "group_#{group.id}", h(group.name) %>
+        <% unless group.child_groups.blank? %>
+          <div id='tree_<%= group.id %>' style='display:none'>
+          <% second_num = group.child_groups.count %>
+          <% group.child_groups.each_with_index do |group, i| %>
+            <li style="list-style:none;">
+            <% if i < second_num - 1 %>
+              <%= image_tag("blanch_t.png", :alt => "") %>
+            <% else %>
+              <%= image_tag("blanch_l.png", :alt => "") %>
+            <% end %>
+            <% unless group.child_groups.blank? %>
+              <span onclick="Node_Click('tree_<%= group.id %>','open<%= group.id %>','close<%= group.id %>')">
+              <%= image_tag("cl_minous.png", {:id => "close#{group.id}", :style => "width:10px;length:10px;display:none;"}) %>
+              <%= image_tag("op_plus.png", {:id => "open#{group.id}", :style => "width:10px;length:10px;"}) %>
+              </span>
+            <% else %>
+              <%= image_tag("cl_minous.png", :alt => "") %>
+            <% end %>
+            <%= check_box_tag "user_group[]", group.id, checkbox_is_selected?(group_ids, group.id), :id =>"group_#{group.id}" %>
+            <%= label_tag "group_#{group.id}", h(group.name) %>
+            <% unless group.child_groups.blank? %>
+              <div id='tree_<%= group.id %>' style='display:none'>
+              <% third_num = group.child_groups.count %>
+              <% group.child_groups.each_with_index do |group, j| %>
+                <li style="list-style:none;">
+                <% if j < third_num - 1 %>
+                  <%= image_tag("blanch_t.png", {:alt => "", :style => "margin-left:28px;"}) %>
+                <% else %>
+                  <%= image_tag("blanch_l.png", {:alt => "", :style => "margin-left:28px;"}) %>
+                <% end %>
+                 <%= check_box_tag "user_group[]", group.id, checkbox_is_selected?(group_ids, group.id), :id =>"group_#{group.id}" %>
+                 <%= label_tag "group_#{group.id}", h(group.name) %>
+                </li>
+              <% end %>
+              </div>
+            <% end %>
+            </li>
+          <% end %>
+          </div>
+        <% end %>
+        </li>
+        <% end %>
+      </ul>
+      </td>
+    </tr>
+  <% end %>
+</table>
+

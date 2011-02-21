@@ -1,0 +1,37 @@
+<table class="organize">
+  <tr>
+    <th>受信者名</th>
+    <td><%= recipient.name %></td>
+  </tr>
+  <tr>
+    <th>
+      受信者連絡先
+      電話番号
+    </th>
+    <td><%= recipient.tel1 %></td>
+  </tr>
+  <!--
+  <tr>
+    <th>電話番号2</th>
+    <td><%#= recipient.tel2 %></td>
+  </tr>
+  -->
+  <tr>
+    <th>区分</th>
+    <td><%= recipient.relation %></td>
+  </tr>
+  <% unless recipient.recipient_groups.blank? %>
+  <tr>
+    <th>グループ</th>
+    <td>
+      <% recipient.recipient_groups.each do |recipient_group| %>
+      <%= recipient_group.group.full_name %><br /><br />
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+  <tr>
+    <th>メールアドレス</th>
+    <td><%= recipient.account.login %></td>
+  </tr>
+</table>

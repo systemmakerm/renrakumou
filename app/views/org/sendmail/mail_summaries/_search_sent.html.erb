@@ -1,0 +1,26 @@
+<h2>送信先検索</h2>
+<% form_tag(search_org_sendmail_mail_summaries_path+ "#result") do %>
+  <span style="float:left;">
+    グループ<%= select_tag :group_id, options_for_select_sent_group(@mail_summary, params[:group_id]) %>
+  </span>
+  <span style="float:left;margin-left:13px;">
+  ユーザー名<%= text_field_tag :name, params[:name], :size => 10 %>
+  </span>
+  <% if @mail_summary.selections.present? %>
+    <span style="float:left;margin-left:13px;">
+    回答状況<%= select_tag :ans_situation, options_for_ans_situation(params[:ans_situation]) %>
+    </span>
+  <% end %>
+  <span style="float:left;margin-left:30px;">
+    <%= hidden_field_tag :id, @mail_summary.id %>
+    <%= submit_tag '検索' %>
+  </span>
+
+<div class="clear"></div>
+<br />
+  <% if @recipients.present? %>
+    <%= submit_tag "再送信", :name => 'mail_retry', :class => 'float-right' %>
+  <% end %>
+<%= render :partial => 'search_sent_result' %>
+<% end %>
+

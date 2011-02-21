@@ -1,0 +1,33 @@
+<h1>受信者登録</h1>
+<%= link_to "戻る", detail_org_recipients_path(:id => current_account.recipient.id) %>
+<%= render :partial => "/share/user/user_info", :locals => {:user => @user} %>
+<% form_for(current_account, :url => form_params[:url], :html => {:method => :post}) do |f| %>
+  <%= f.error_messages.untaint %>
+  <% fields_for "account[recipient_attributes]", current_account.recipient do |rf| %>
+    <%= render :partial => "/share/recipient/recipient_form", :locals => {:rf => rf} %>
+  <% end %>
+  <table class="organize">
+    <tr>
+      <th>メールアドレス<span style="color: red;">(＊)</span></th>
+      <td><%= current_account.login %>
+        <%= f.hidden_field :login %>
+        <%= f.hidden_field :login_confirmation, :default => current_account.login %>
+      </td>
+    </tr>
+  </table>
+  ※パスワードは6文字以上でお願いします。
+  <table class="organize">
+    <tr>
+      <th>パスワード<span style="color: red;">(＊)</span></th>
+      <td><%= f.password_field :password %></td>
+    </tr>
+    <tr>
+      <th>確認用パスワード<span style="color: red;">(＊)</span></th>
+      <td><%= f.password_field :password_confirmation %></td>
+    </tr>
+  </table>
+  <%= hidden_field_tag 'account[recipient_attributes][organization_id]', current_account.recipient.organization_id %>
+  <%= hidden_field_tag 'account[recipient_attributes][user_id]', @user.id %>
+  <%= f.submit "確認" %>
+<% end %>
+

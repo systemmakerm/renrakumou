@@ -1,0 +1,32 @@
+<h1>グループ明細</h1>
+<span style="color:green"><pre><%= flash[:notice] %></pre></span>
+<%= link_to "グループ一覧へ", org_groups_path %>
+<br /><br />
+<table class="group_show">
+  <tr>
+    <th style="background-color:#feecb4;width:270px">
+      上位グループ
+    </th>
+    <th style="background-color:#feecb4;width:270px;padding:5px;">
+      グループ名
+    </th>
+  </tr>
+  <tr>
+    <td style=";padding:5px;text-align:right">
+      <%= @group.parent_id.blank? ? "なし" : @group.parent_name %>
+    </td>
+    <td style="text-align:left">
+      <%= @group.name %>
+    </td>
+  </tr>
+</table>
+<br /><br />
+<%= link_to "編集", edit_org_group_path(@group), :class=>"float-left" %>　|
+<% form_tag(delete_org_groups_path) do %>
+  <%= hidden_field_tag :id, @group.id %>
+  <span style="float: left; margin-left:20px;">
+    <%= submit_tag '削除', :confirm=>'このグループを削除します。よろしいですか？' %>
+  </span>
+<% end %>
+<%= link_to "削除", @group, :confirm => "このグループを削除します。よろしいですか？", :method => :delete %>
+

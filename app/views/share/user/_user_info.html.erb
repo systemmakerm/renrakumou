@@ -1,0 +1,28 @@
+<br /><br />
+<span style="font-size:16px;font-weight:bold;">ユーザー情報</span>
+<table class="user_info">
+  <tr>
+    <th>登録番号</th>
+    <td>:<%= user.number %></td>
+  </tr>
+  <tr>
+    <th>ユーザー名</th>
+    <td>:<%= user.name %></td>
+  </tr>
+  <% unless user.user_groups.empty? %>
+    <tr>
+      <th>グループ</th>
+      <td>:
+        <% user.user_groups.each do |user_group| %>
+          <%= user_group.group.full_name + ",\n" %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  <% if user.memo.present? %>
+    <tr>
+      <th>メモ</th>
+      <td>:<%= user.memo %></td>
+    </tr>
+  <% end %>
+</table>

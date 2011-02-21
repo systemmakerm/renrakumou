@@ -1,0 +1,90 @@
+<h1>グループ登録</h1>
+<%= @group.new_record? ? link_to("一覧に戻る", org_groups_path) : link_to("戻る", org_group_path(@group)) %>
+<br /><br />
+<% form_for @group, :url => org_groups_path, :html => {:method => :post} do |f| %>
+  <%= f.error_messages.untaint %>
+<table style="float:left;width:300px;">
+<tr>
+  <th style="background-color:#feecb4;">上位グループ選択</th>
+</tr>
+<tr>
+  <td>
+  <br />
+  <span style="margin-left:35px;">
+  <% unless @groups.blank? %>
+    <%= radio_button_tag :parent_id, 0 %>指定なし
+  <% else %>
+    未作成<%= hidden_field_tag "parent_id", 0 %>
+  <% end %>
+  </span>
+  <br /><br />
+
+<% unless @groups.blank? %>
+  <ul>
+  <% @groups.each do |group| %>
+    <li style="list-style:none;">
+    <input id="group_<%= group.id %>" name="parent_id" type="radio" value="<%= group.id %>" />
+    <%= group.name %>
+    <span id="show_<%= group.id %>" onclick="Element.toggle('tree_<%= group.id %>'); return false;">
+    </span>
+    <% unless group.child_groups.blank? %>
+      <ul id='tree_<%= group.id %>' style='display:none'>
+      <% group.child_groups.each do |group| %>
+        <li style="list-style:none;">
+        <input id="group_<%= group.id %>" name="parent_id" type="radio" value="<%= group.id %>" />
+        <a href="#" id="show_<%= group.id %>" onclick="Element.toggle('tree_<%= group.id %>'); return false;">
+        <%= group.name %>
+        </a>
+        <% unless group.child_groups.blank? %>
+          <ul id='tree_<%= group.id %>' style='display:none'>
+          <% group.child_groups.each do |group| %>
+            <li style="list-style:none;">
+            <%= group.name %>
+            </li>
+          <% end %>
+          </ul>
+        <% end %>
+        </li>
+      <% end %>
+      </ul>
+    <% end %>
+    </li>
+    <% end %>
+  </ul>
+<% end %>
+
+  </td>
+</tr>
+</table>
+
+<table style="float:left;">
+  <tr>
+    <th style="background-color:#feecb4;">グループ名</th>
+  </tr>
+  <tr>
+    <td>
+      <%= f.text_field :name %><br />
+    </td>
+  </tr>
+</table>
+<div class="clear"></div>
+  <br /><br />
+  <%= f.submit "保存" %>
+<% end %>
+
+
+<script type="text/javascript">
+
+  switch_panel = function () {
+    var search_disabled = document.getElementById("search_disabled");
+    var search_enabled = document.getElementById("search_enabled");
+    if (search_enabled.style.display == "none") {
+      search_enabled.style.display = "block";
+      search_disabled.style.display = "none";
+    } else {
+      search_enabled.style.display = "none";
+      search_disabled.style.display = "block";
+    }
+  }
+
+</script>

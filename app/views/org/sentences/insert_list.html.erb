@@ -1,0 +1,109 @@
+<script type="text/javascript">
+  function Node_Click(idChild, idClose, idOpen)
+  {
+      if (!document.getElementById) return;
+      var objChild = document.getElementById(idChild);
+      var objClose = document.getElementById(idClose);
+      var objOpen = document.getElementById(idOpen);
+      if (objChild.style.display=="none")  {
+          objChild.style.display = "block";
+          objClose.style.display = "none";
+          objOpen.style.display = "inline";
+      } else {
+          objChild.style.display = "none";
+          objClose.style.display = "inline";
+          objOpen.style.display = "none";
+      }
+  }
+
+  function SenteInsert(Subject, Body){
+    var oya_document =  window.opener.document;
+    oya_document.getElementById(1).value = Subject;
+    oya_document.getElementById(2).value = Body;
+  }
+</script>
+
+<h2>メールひな形一覧</h2>
+<span style="color:green"><pre><%= flash[:notice] %></pre></span>
+<% unless @sentences.blank? %>
+  <ul>
+  <% @sentences.each do |sentence| %>
+    <li style="list-style:none;">
+    <span>
+      <span style="float:left;">
+      <% unless sentence.child_sentences.blank? %>
+        <span onclick="Node_Click('tree_<%= sentence.id %>','open<%= sentence.id %>','close<%= sentence.id %>')">
+        <img id="close<%= sentence.id %>" src="/images/cl_minous.png" alt="" style="width:10px; height:10px; display:none"></img>
+        <img id="open<%= sentence.id %>" src="/images/op_plus.png" alt="" style="width:10px; height:10px;"></img>
+        </span>
+      <% else %>
+        <img src="/images/cl_minous.png" alt=""></img>
+      <% end %>
+      <%= sentence.group_name %>:<%= link_to sentence.subject, detail_org_sentences_path(:id=>sentence.id) %>
+      </span>
+      <span style="float:left;margin-left:10px;">
+      <a href="" onclick="SenteInsert('<%= sentence.subject.delete("\r\n") %> ',
+        '<%= sentence.body.delete("\r\n") %> ')" >コピー</a>
+      </span>
+    </span><div style="clear:both"></div>
+    <% unless sentence.child_sentences.blank? %>
+      <div id='tree_<%= sentence.id %>' style='display:none'>
+      <% second_num = sentence.child_sentences.count %>
+      <% sentence.child_sentences.each_with_index do |child_sente, i| %>
+        <li style="list-style:none;">
+        <span>
+          <span style="float:left;">
+        <% if i < second_num - 1 %>
+          <img src="/images/blanch_t.png"></img>
+        <% else %>
+          <img src="/images/blanch_l.png"></img>
+        <% end %>
+        <% unless child_sente.child_sentences.blank? %>
+          <span onclick="Node_Click('tree_<%= child_sente.id %>','open<%= child_sente.id %>','close<%= child_sente.id %>')">
+          <img id="close<%= child_sente.id %>" src="/images/cl_minous.png" alt="" style="width:10px; height:10px; display:none"></img>
+          <img id="open<%= child_sente.id %>" src="/images/op_plus.png" alt="" style="width:10px; height:10px;"></img>
+          </span>
+        <% else %>
+          <img src="/images/cl_minous.png" alt=""></img>
+        <% end %>
+        <%= child_sente.group_name %>:<%= link_to child_sente.subject, detail_org_sentences_path(:id => child_sente.id) %>
+          </span>
+          <span style="float:left;margin-left:10px;">
+          <a href="" onclick="SenteInsert('<%= child_sente.subject.delete("\r\n") %> ',
+            '<%= child_sente.body.delete("\r\n") %> ')" >コピー</a>
+          </span>
+        </span><div style="clear:both"></div>
+        <% unless child_sente.child_sentences.blank? %>
+          <div id='tree_<%= child_sente.id %>' style='display:none'>
+          <% third_num = child_sente.child_sentences.count %>
+          <% child_sente.child_sentences.each_with_index do |gran_child_sente, j| %>
+            <li style="list-style:none;">
+            <span>
+              <span style="float:left;">
+              <% if j < third_num - 1 %>
+                <img src="/images/blanch_t.png" style="margin-left:28px;"></img>
+              <% else %>
+                <img src="/images/blanch_l.png" style="margin-left:28px;"></img>
+              <% end %>
+              <%= link_to gran_child_sente.subject, detail_org_sentences_path(:id => gran_child_sente.id) %>
+              </span>
+              <span style="float:left;margin-left:10px;">
+              <a href="" onclick="SenteInsert('<%= gran_child_sente.subject.delete("\r\n") %> ',
+                '<%= gran_child_sente.body.delete("\r\n") %> ')" >コピー</a>
+              </span>
+            </span><div style="clear:both"></div>
+           </li>
+          <% end %>
+          </div>
+        <% end %>
+        </li>
+      <% end %>
+      </div>
+    <% end %>
+    </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<a href="javascript:window.close();" style="float:right;">閉じる</a>
+

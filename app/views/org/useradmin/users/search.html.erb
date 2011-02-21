@@ -1,0 +1,23 @@
+<h1>ユーザー検索</h1>
+<h3>検索条件</h3>
+<% form_tag(select_user_org_useradmin_users_path+ "#result") do %>
+  <span style="float:left;">
+    グループ：
+    <%= select_tag :group_id, options_for_group(current_account.organization.id, params[:group_id]) %>
+  </span>
+  <div class="clear"></div><br />
+  <span style="float:left;">
+  登録番号：<%= text_field_tag :number, params[:number], :size => 10 %>
+  ユーザー名：<%= text_field_tag :name, params[:name], :size => 15 %>
+  <span style="floag:left;margin-left:40px;">
+    <%= submit_tag '検索' %>
+    <%= submit_tag 'CSV' , :name => 'csv' %>
+  </span>
+<% end %>
+</span>
+<div class="clear"></div>
+<br />
+<%= button_to "新規登録", new_org_useradmin_user_path %>
+<span style="color:green"><pre><%= flash[:notice] %></pre></span><% flash[:notice] = nil %>
+<%= render :partial => "result" %>
+

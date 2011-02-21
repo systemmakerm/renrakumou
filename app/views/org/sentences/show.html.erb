@@ -1,0 +1,44 @@
+<h1>メールひな形明細</h1>
+<span style="color:green"><pre><%= flash[:notice] %></pre></span>
+<%= link_to "メールひな形一覧へ", org_sentences_path %>
+<br /><br />
+<table class="group_show">
+  <tr>
+    <th>上位グループ</th>
+    <th>グループ名</th>
+    <th>下位グループ</th>
+  </tr>
+  <tr>
+    <td style="text-align:right;">
+      <%= @sentence.parent_sentence_id == 0 ? "なし" : @sentence.parent_name %>
+    </td>
+    <td style="text-align:center">
+      <%= @sentence.group_name %>
+    </td>
+    <td style="text-align:left">
+      <% if @sentence.child_sentences %>
+        <% @sentence.child_sentences.each do |child| %>
+          <%= child.full_group_name %><br />
+          <% if child.child_sentences %>
+            <% child.child_sentences.each do |grand_child| %>
+              <%= grand_child.full_group_name %><br />
+            <% end %>
+          <% end %>
+        <% end %>
+      <% else %>
+        なし
+      <% end %>
+    </td>
+  </tr>
+</table>
+<br /><br />
+<span style="float: left;">
+<%= link_to "編集", edit_org_sentence_path(@sentence), :class=>"float-left" %>
+</span>
+<% form_tag(delete_org_sentences_path) do %>
+  <%= hidden_field_tag :id, @sentence.id %>
+  <span style="float: left; margin-left:20px;">
+    <%= submit_tag '削除', :confirm=>"メールひな形グループ「#{@sentence.full_group_name}」およびその下位グループが削除されます。よろしいですか？" %>
+  </span>
+<% end %>
+

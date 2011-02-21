@@ -1,0 +1,76 @@
+    <h1>ユーザー明細</h1>
+		<table class="organize">
+			<tr>
+				<th>
+          登録番号
+          <span style="color: red;">(必須)</span>
+        </th>
+				<td>
+          <%= @user.number %>
+        </td>
+			</tr>
+			<tr>
+				<th>
+          ユーザー名
+          <span style="color: red;">(必須)</span>
+        </th>
+				<td>
+          <%= @user.name %>
+        </td>
+			</tr>
+			<tr>
+				<th>
+          メモ
+        </th>
+				<td>
+          <%= @user.memo %>
+        </td>
+			</tr>
+		</table>
+  <br /><br />
+<% form_tag(detail_org_useradmin_users_path) do %>
+  <%= hidden_field_tag :user_id, @user.id %>
+  <%= hidden_field_tag :user_number, @user.number %>
+  <span style="float: left;">
+    <span style="float: left;">
+      <%= submit_tag '受信者登録', :name => 'recipient_add' %>
+    </span>
+    <span style="float: left; margin-left:250px;">
+      <%= submit_tag 'ユーザー編集', :name => 'user_edit' %>
+    </span>
+  </span>
+<% end %>
+<% form_tag(delete_org_useradmin_users_path) do %>
+  <%= hidden_field_tag :user_id, @user.id %>
+  <span style="float: left; margin-left:20px;">
+    <%= submit_tag 'ユーザー削除', :confirm=>'ユーザーを削除しますとその受信者も削除されます。ユーザーを削除していいですか？' %>
+  </span>
+<% end %>
+<br />
+<% if @user.recipients.present? %>
+<h2>受信者一覧</h2>
+  <table>
+    <tr>
+      <th>受信者名</th>
+      <th>メールアドレス</th>
+      <th>続柄</th>
+    </tr>
+    <% @user.recipients.each do |recipient| %>
+      <tr>
+        <td>
+          <%= link_to recipient.name, org_useradmin_recipient_path(recipient) %>
+        </td>
+        <td>
+          <%= recipient.email %>
+        </td>
+        <td>
+          <%= recipient.relation %>
+        </td>
+        <td>
+          <%= link_to "編集", edit_org_useradmin_recipient_path(recipient) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+

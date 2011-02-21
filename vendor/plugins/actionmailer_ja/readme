@@ -1,0 +1,109 @@
+ActionmailerJa
+==============
+
+インストールするだけで、ActionMailer が日本語対応になるプラグインです。
+また、携帯電話用のメールテンプレートの振り分け機能も提供します。
+
+Ruby on Rails 2.0 以降に対応しています。
+
+
+Example
+=======
+
+*日本語対応。
+
+インストールするだけで、メールが iso-2022-jp で送信されるようになります。
+（Softbank の携帯電話への送信は UTF-8 になります。）
+
+
+*携帯電話対応。
+
+jpmobile 風のキャリア別テンプレート振り分け機能があり、携帯電話のメールアドレスの場合、キャリア別のテンプレートが利用できます。
+
+まず携帯キャリア別のテンプレートを探し存在すればそれを利用します。（拡張子は erb である必要はありません）
+
+
+xx_mobile_docomo.erb 
+xx_mobile_au.erb 
+xx_mobile_softbank.erb 
+xx_mobile_willcom.erb 
+xx_mobile_iphone.erb
+
+
+携帯キャリア別のテンプレートがない場合、携帯共通のテンプレートを探し存在すればそれを利用します。 
+
+
+xx_mobile.erb 
+
+
+携帯メール用テンプレートが存在しなければ、通常通りのテンプレートを利用します。 
+
+
+xx.erb 
+
+
+Ruby on Rails 2.2 以降であれば、ActionMailer でも layout が利用できるようになっています。
+
+layout ファイルも上記のテンプレートと同様に、まずキャリア別のレイアウトを探し、
+
+存在しなければ、携帯共通レイアウト、それも存在しなければ通常レイアウトを利用します。
+
+
+*Subject などを Base64 Encode する機能の提供。
+
+ActionMailer は Subject, From, Cc, Recipients に日本語を使うと文字化けしてしまいますが、
+
+以下のオプションを true にすることで、Subject, From, Cc, Recipients を自動的に Base64 Encode することで、
+
+日本語が利用できるようにします。（デフォルト true）
+
+
+ActionMailer::Ja::auto_base64_encode = false
+
+
+自動エンコード機能を使わない場合、例えば以下のように quote_if_necessary を利用します。 
+
+
+class ActionmailerJaTest < ActionMailer::Base
+  def test(user_name, email)
+    @subject     = "㈱テスト№①"
+    @recipients  = quote_if_necessary("#{user_name} <#{email}>", 'iso-2022-jp')
+    @from        = quote_if_necessary("#{$ADMIN_NAME} <#{$ADMIN_MAIL}>", 'iso-2022-jp')
+  end
+end
+
+
+*機種依存文字を代替文字に置換する機能の提供。
+
+iPhone の Mail.app などの MUA では Subject などに①などの機種依存文字を使うと文字化けしてしまいます。
+
+以下のように auto_replace_safe_char を true にすることで、自動的に機種依存文字が置換されます。（デフォルトfalse）
+
+
+ActionMailer::Ja::auto_replace_safe_char = true
+
+
+自動置換機能を使わない場合、例えば以下のようにして手動で replace_for_safe_char を呼び出します。 
+
+
+class ActionmailerJaTest < ActionMailer::Base
+  def test(user_name, email)
+    @subject = replace_for_safe_char("㈱テスト№①")
+  end
+end
+
+
+この結果、@subject は「（株）テストNo.(1)」のように変換されます。 
+
+
+
+*Ruby-GetText との共存
+特に設定は必要ありません。
+
+
+*Patch Contributers
+knu : http://github.com/knu/
+beyond : http://github.com/beyond/
+
+
+Copyright (c) 2009 KUSAKARI Kei, released under the MIT license

@@ -1,0 +1,57 @@
+  <table class="organize">
+    <tr>
+      <th>団体名</th>
+      <td><%= @organization.name -%></td>
+    </tr>
+    <tr>
+      <th>使用目的</th>
+      <td><pre><%= @organization.purpose %></pre></td>
+    </tr>
+    <tr>
+      <th>代表者名</th>
+      <td><%= @organization.leader_name %></td>
+    </tr>
+    <tr>
+      <th>フリガナ</th>
+      <td><%= @organization.kana %></td>
+    </tr>
+    <tr>
+      <th>性別</th>
+      <td><%= @organization.leader_sex? %></td>
+    </tr>
+    <tr>
+      <th>郵便番号</th>
+      <td><%= @organization.zip %></td>
+    </tr>
+    <tr>
+      <th>都道府県</th>
+      <td><%= @organization.prefecture %></td>
+    </tr>
+    <tr>
+      <th>住所1</th>
+      <td><%= @organization.address1 %></td>
+    </tr>
+    <tr>
+      <th>住所2</th>
+      <td><%= @organization.address2 %></td>
+    </tr>
+    <tr>
+      <th>TEL</th>
+      <td><%= @organization.tel %></td>
+    </tr>
+    <tr>
+      <th>FAX</th>
+      <td><%= @organization.fax %></td>
+    </tr>
+  </table>
+  <%= of.hidden_field :name %>
+  <%= of.hidden_field :leader_name %>
+  <%= of.hidden_field :kana %>
+  <%= of.hidden_field :sex %>
+  <%= of.hidden_field :zip %>
+  <%= of.hidden_field :prefecture %>
+  <%= of.hidden_field :address1 %>
+  <%= of.hidden_field :address2 %>
+  <%= of.hidden_field :tel %>
+  <%= of.hidden_field :fax %>
+  <%= of.hidden_field :purpose %>

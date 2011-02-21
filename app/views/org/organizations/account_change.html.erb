@@ -1,0 +1,38 @@
+<h1>メールアドレス・パスワード変更</h1>
+<%= link_to "団体一覧に戻る", org_list_org_organizations_path %>
+<br /><br />
+  <%= render :partial => "org_information" %>
+<% form_for(@account, :url => change_before_confirm_org_organizations_path, :html => {:method => :post}) do |f| %>
+  <%= f.error_messages.untaint %>
+  <table class="organize">
+    <tr>
+      <th>メールアドレス<span style="color: red;">(＊)</span></th>
+      <td>
+        <%= text_field_tag 'account[login]', @login %>
+      </td>
+    </tr>
+    <tr>
+      <th>確認用メールアドレス<span style="color: red;">(＊)</span></th>
+      <td>
+        <%= text_field_tag 'account[login_confirmation]', @login_confirmation %>
+      </td>
+    </tr>
+    <tr>
+      <th>パスワード<span style="color: red;">(＊)</span></th>
+      <td>
+        <%= f.password_field :password %><br />
+      </td>
+    </tr>
+    <tr>
+      <th>確認用パスワード<span style="color: red;">(＊)</span></th>
+      <td>
+        <%= f.password_field :password_confirmation %>
+      </td>
+    </tr>
+  </table>
+  <br /><br />
+  <%= hidden_field_tag :id, @organization.id %>
+  <%= f.submit "確認" %>
+<% end %>
+
+

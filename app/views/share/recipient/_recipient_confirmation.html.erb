@@ -1,0 +1,30 @@
+<table class="organize">
+  <tr>
+    <th>受信者名</th>
+    <td><%= recipient.name %></td>
+  </tr>
+  <tr>
+    <th>続柄</th>
+    <td><%= recipient.relation %></td>
+  </tr>
+  <tr>
+    <th>電話番号1</th>
+    <td><%= recipient.tel1 %></td>
+  </tr>
+  <tr>
+    <th>電話番号2</th>
+    <td><%= recipient.tel2 %></td>
+  </tr>
+  <% if params[:recipient_group].present? %>
+    <tr>
+      <th>グループ</th>
+      <td>
+        <% @recipient_groups.each do |group| %>
+          <%= group.full_name %>
+          <%= hidden_field_tag "recipient_group[]", group.id %>
+          <br /><br />
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>

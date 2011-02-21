@@ -1,0 +1,44 @@
+<% # これがないとドコモ携帯端末でsession_idが渡らない
+    current_account %>
+<h1>メール明細</h1>
+<%= link_to "メール一覧に戻る", org_sendmail_mail_summaries_path %><br />
+<b>件名</b>
+<br />
+<%=h @mail_summary.subject %>
+<br />
+
+<b>本文</b>
+<pre><%=h @mail_summary.body %></pre>
+<% if @mail_summary.selections.present? %>
+  <b>回答選択肢</b>
+  <br />
+  <% @mail_summary.selections.each_with_index do |selection, index| -%>
+    <% if selection.body.present? -%>
+      <%= index + 1 %>. <%=h selection.body %><br />
+    <% end -%>
+  <% end -%>
+
+  <% if @mail_summary.address_for_map.present? -%>
+    <b>地図用住所</b>
+    <br />
+    <%=h @mail_summary.address_for_map %>
+  <% end -%>
+
+  <b>送信先</b>
+  <br />
+  <% @mail_summary.mail_groups.each do |mail_group| -%>
+    <%= mail_group.group.name %>
+  <% end -%>
+
+  <b>送信予約日時</b>
+  <br />
+  <% if @mail_summary.delivery_reserve_time && @mail_summary.delivery_reserve_time.delivery_reserve_time.present? -%>
+    <%= @mail_summary.delivery_reserve_time.delivery_reserve_time.strftime("%Y/%m/%d %H:%M") %>
+  <% end -%>
+<% end -%>
+<br />
+<%= link_to "編集", editor_org_sendmail_mail_summaries_path(:id => @mail_summary) %> |
+<% form_tag(delete_org_sendmail_mail_summaries_path) do -%>
+  <%= hidden_field_tag :id, @mail_summary.id %>
+  <%= submit_tag "削除" %>
+<% end -%>

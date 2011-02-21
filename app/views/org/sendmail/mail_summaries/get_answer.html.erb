@@ -1,0 +1,12 @@
+<h1>
+  <%= @mail_summary.organization.name %>連絡網
+</h1>
+
+<h3>
+  <%= @recipient.name %>様<br /><br />
+    件名：
+    <%= @mail_summary.subject %><br /><br />
+    のご回答を下記で受けとりました。<br /><br />
+    <%= @selection.number %>.
+    <%= @selection.body %>
+</h3>

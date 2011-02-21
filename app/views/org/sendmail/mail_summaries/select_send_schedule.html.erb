@@ -1,0 +1,261 @@
+<table>
+  <tr>
+    <td class="userflow_td3">件名・本文<br />作成</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td1">送信先・日時<br />設定</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">メール<br />作成確認</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">メール<br />作成完了</td>
+  </tr>
+</table>
+<% form_for(@mail_summary, :url => select_params[:url], :html => {:method => :post}) do |f| %>
+  <h1>メール送信先・日時設定</h1>
+  <%= f.submit "戻る", :name => 'cancel' %><br /><br />
+  <%= f.error_messages.untaint %>
+  <span style="color: red;">(＊)は必須入力</span>
+  <table class="mail_form">
+    <tr>
+      <th>送信先<span style="color: red;">(*)</span></th>
+    </tr>
+    <tr>
+      <td>
+      <% if @groups.present? %>
+        <% params[:mail_group].blank? ? group_ids = @check_groups : group_ids = params[:mail_group] %>
+        <% params[:mail_user].blank? ? user_ids = @check_users : user_ids = params[:mail_user] %>
+        <% params[:mail_recipient].blank? ? recipient_ids = @check_recipients : recipient_ids = params[:mail_recipient] %>
+        <ul>
+          <li style="list-style:none;">
+            <span onclick="Node_Click('tree_0','open0','close0')">
+            <%= image_tag("cl_minous.png", {:id => "close0", :style => "width:10px;length:10px;display:none;"}) %>
+            <%= image_tag("op_plus.png", {:id => "open0", :style => "width:10px;length:10px;"}) %>
+            </span>
+            <%= check_box_tag "mail_summary[all_send]", 1, all_send_checkbox_is_selected?(params[:mail_summary][:all_send]) %>
+            <%= label_tag "mail_summary[all_send]", "全体" %>
+            <div>
+            <span id='tree_0' style='display:none'>
+            <% first_num = @groups.count %>
+            <% @groups.each_with_index do |group, q| %>
+              <li style="list-style:none;">
+              <% if q < first_num -1 %>
+                <%= image_tag("blanch_t.png", :alt => "") %>
+              <% else %>
+                <%= image_tag("blanch_l.png", :alt => "") %>
+              <% end %>
+              <% if group.child_groups.present? || group.user_group_users.present? || group.group_recipients.present? %>
+                <span onclick="Node_Click('tree_<%= group.id %>','open<%= group.id %>','close<%= group.id %>')">
+                <%= image_tag("cl_minous.png", {:id => "close#{group.id}", :style => "width:10px;length:10px;display:none;"}) %>
+                <%= image_tag("op_plus.png", {:id => "open#{group.id}", :style => "width:10px;length:10px;"}) %>
+                </span>
+              <% else %>
+                <%= image_tag("cl_minous.png", :alt => "") %>
+              <% end %>
+              <%= check_box_tag "mail_group[]", group.id, checkbox_is_selected?(group_ids, group.id), :id =>"group_#{group.id}" %>
+              <%= label_tag "group_#{group.id}", h(group.name) %>
+              <% if group.child_groups.present? || group.user_group_users.present? || group.group_recipients.present? %>
+                <div>
+                <span id='tree_<%= group.id %>' style='display:none'>
+                <% if group.child_groups.present? %>
+                  <% second_num = group.child_groups.count %>
+                  <% group.child_groups.each_with_index do |child, i| %>
+                    <li style="list-style:none;">
+                    <% if i < second_num -1 %>
+                      <%= image_tag("blanch_t.png", :alt => "", :style => "margin-left:28px;") %>
+                    <% else %>
+                      <%= image_tag("blanch_l.png", :alt => "", :style => "margin-left:28px;") %>
+                    <% end %>
+                    <% if child.child_groups.present? || child.user_group_users.present? || child.group_recipients.present? %>
+                      <span onclick="Node_Click('tree_<%= child.id %>','open<%= child.id %>','close<%= child.id %>')">
+                      <%= image_tag("cl_minous.png", {:id => "close#{child.id}", :style => "width:10px;length:10px;display:none;"}) %>
+                      <%= image_tag("op_plus.png", {:id => "open#{child.id}", :style => "width:10px;length:10px;"}) %>
+                      </span>
+                    <% else %>
+                      <%= image_tag("cl_minous.png", :alt => "") %>
+                    <% end %>
+                    <%= check_box_tag "mail_group[]", child.id, checkbox_is_selected?(group_ids, child.id), :id =>"group_#{child.id}" %>
+                    <%= label_tag "group_#{child.id}", h(child.name) %>
+                    <% if child.child_groups.present? || child.user_group_users.present? || child.group_recipients.present? %>
+                      <div>
+                      <span id='tree_<%= child.id %>' style='display:none'>
+                      <% if child.child_groups.present? %>
+                        <% third_num = child.child_groups.count %>
+                        <% child.child_groups.each_with_index do |grand_child, j| %>
+                          <li style="list-style:none;">
+                          <% if j < third_num - 1 %>
+                            <%= image_tag("blanch_t.png", {:alt => "", :style => "margin-left:58px;"}) %>
+                          <% else %>
+                            <%= image_tag("blanch_l.png", {:alt => "", :style => "margin-left:58px;"}) %>
+                          <% end %>
+                          <% unless grand_child.user_group_users.blank? %>
+                            <span onclick="Node_Click('tree_<%= grand_child.id %>','open<%= grand_child.id %>','close<%= grand_child.id %>')">
+                            <%= image_tag("cl_minous.png", {:id => "close#{grand_child.id}", :style => "width:10px;length:10px;display:none;"}) %>
+                            <%= image_tag("op_plus.png", {:id => "open#{grand_child.id}", :style => "width:10px;length:10px;"}) %>
+                            </span>
+                          <% else %>
+                            <%= image_tag("cl_minous.png", :alt => "") %>
+                          <% end %>
+                          <%= check_box_tag "mail_group[]", grand_child.id, checkbox_is_selected?(group_ids, grand_child.id), :id =>"group_#{grand_child.id}" %>
+                          <%= label_tag "group_#{grand_child.id}", h(grand_child.name) %>
+                          <% if grand_child.user_group_users.present? || grand_child.group_recipients.present? %>
+                            <div>
+                            <span id='tree_<%= grand_child.id %>' style='display:none'>
+                            <% if grand_child.user_group_users.present? %>
+                              <% third_user = grand_child.user_group_users.count %>
+                              <% grand_child.user_group_users.each_with_index do |thr_user, k| %>
+                                <li style="list-style:none;">
+                                  <% if k < third_user - 1 %>
+                                    <%= image_tag("blanch_t.png", {:alt => "", :style => "margin-left:88px;"}) %>
+                                  <% else %>
+                                    <%= image_tag("blanch_l.png", {:alt => "", :style => "margin-left:88px;"}) %>
+                                  <% end %>
+                                  <%= image_tag("cl_minous.png", :alt => "", :style => "width:10px;height:10px;") %>
+                                  <%= check_box_tag "mail_user[]", thr_user.id, checkbox_is_selected?(user_ids, thr_user.id), :id =>"user_#{thr_user.id}" %>
+                                  <%= label_tag "user_#{thr_user.id}", h(thr_user.name) %>
+                                </li>
+                              <% end %>
+                            <% end %>
+                            <% if grand_child.group_recipients.present? %>
+                              <% third_rec_num = grand_child.group_recipients.count %>
+                              <% grand_child.group_recipients.each_with_index do |thr_rec, n| %>
+                                <li style="list-style:none;">
+                                  <% if n < third_rec_num - 1 %>
+                                    <%= image_tag("blanch_t.png", {:alt => "", :style => "margin-left:88px;"}) %>
+                                  <% else %>
+                                    <%= image_tag("blanch_l.png", {:alt => "", :style => "margin-left:88px;"}) %>
+                                  <% end %>
+                                  <%= image_tag("cl_minous.png", :alt => "", :style => "width:10px;height:10px;") %>
+                                  <%= check_box_tag "mail_recipient[]", thr_rec.id, checkbox_is_selected?(recipient_ids, thr_rec.id), :id =>"recipient_#{thr_rec.id}" %>
+                                  <%= label_tag "recipient_#{thr_rec.id}", h(thr_rec.name) %>
+                                </li>
+                              <% end %>
+                            <% end %>
+                            </span>
+                            </div>
+                          <% end %>
+                         </li>
+                        <% end %>
+                      <% end %>
+                      <% if child.user_group_users.present? || child.group_recipients.present? %>
+                        <% if child.user_group_users.present? %>
+                          <% second_user = child.user_group_users.count %>
+                          <% child.user_group_users.each_with_index do |sec_user, l| %>
+                            <li style="list-style:none;">
+                              <% if l < second_user - 1 %>
+                                <%= image_tag("blanch_t.png", {:alt => "", :style => "margin-left:58px;"}) %>
+                              <% else %>
+                                <%= image_tag("blanch_l.png", {:alt => "", :style => "margin-left:58px;"}) %>
+                              <% end %>
+                              <%= image_tag("cl_minous.png", :alt => "", :style => "width:10px;height:10px;") %>
+                              <%= check_box_tag "mail_user[]", sec_user.id, checkbox_is_selected?(user_ids, sec_user.id), :id =>"user_#{sec_user.id}" %>
+                              <%= label_tag "user_#{sec_user.id}", h(sec_user.name) %>
+                            </li>
+                          <% end %>
+                        <% end %>
+                        <% if child.group_recipients.present? %>
+                          <% second_rec_num = child.group_recipients.count %>
+                          <% child.group_recipients.each_with_index do |sec_rec, o| %>
+                            <li style="list-style:none;">
+                              <% if o < second_rec_num - 1 %>
+                                <%= image_tag("blanch_t.png", {:alt => "", :style => "margin-left:58px;"}) %>
+                              <% else %>
+                                <%= image_tag("blanch_l.png", {:alt => "", :style => "margin-left:58px;"}) %>
+                              <% end %>
+                              <%= image_tag("cl_minous.png", :alt => "", :style => "width:10px;height:10px;") %>
+                              <%= check_box_tag "mail_recipient[]", sec_rec.id, checkbox_is_selected?(recipient_ids, sec_rec.id), :id =>"recipient_#{sec_rec.id}" %>
+                              <%= label_tag "recipient_#{sec_rec.id}", h(sec_rec.name) %>
+                            </li>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                      </span>
+                      </div>
+                    <% end %>
+                    </li>
+                  <% end %>
+                <% end %>
+                <% if group.user_group_users.present? || group.group_recipients.present? %>
+                  <% if group.user_group_users.present? %>
+                    <% top_usr_num = group.user_group_users.count %>
+                    <% group.user_group_users.each_with_index do |top_user, m| %>
+                      <li style="list-style:none;">
+                        <% if m < top_usr_num - 1 %>
+                          <%= image_tag("blanch_t.png", :alt => "", :style => "margin-left:28px;") %>
+                        <% else %>
+                          <%= image_tag("blanch_l.png", :alt => "", :style => "margin-left:28px;") %>
+                        <% end %>
+                        <%= image_tag("cl_minous.png", :alt => "", :style => "width:10px;height:10px;") %>
+                        <%= check_box_tag "mail_user[]", top_user.id, checkbox_is_selected?(user_ids, top_user.id), :id =>"user_#{top_user.id}" %>
+                        <%= label_tag "user_#{top_user.id}", h(top_user.name) %>
+                      </li>
+                    <% end %>
+                  <% end %>
+                  <% if group.group_recipients.present? %>
+                    <% top_rec_num = group.group_recipients.count %>
+                    <% group.group_recipients.each_with_index do |top_rec, p| %>
+                      <li style="list-style:none;">
+                        <% if p < top_rec_num - 1 %>
+                          <%= image_tag("blanch_t.png", :alt => "", :style => "margin-left:28px;") %>
+                        <% else %>
+                          <%= image_tag("blanch_l.png", :alt => "", :style => "margin-left:28px;") %>
+                        <% end %>
+                        <%= image_tag("cl_minous.png", :alt => "", :style => "width:10px;height:10px;") %>
+                        <%= check_box_tag "mail_recipient[]", top_rec.id, checkbox_is_selected?(recipient_ids, top_rec.id), :id =>"recipient_#{top_rec.id}" %>
+                        <%= label_tag "recipient_#{top_rec.id}", h(top_rec.name) %>
+                      </li>
+                    <% end %>
+                  <% end %>
+                <% end %>
+                </span>
+                </div>
+              <% end %>
+              </li>
+            <% end %>
+            </span>
+            </div>
+          </li>
+        </ul>
+      <% else %>
+        <ul>
+          <li><%= image_tag("cl_minous.png", :alt => "", :style => "width:10px;height:10px;") %>全体</li>
+        </ul>
+      <% end %>
+      </td>
+    </tr>
+    <tr>
+      <th>区分</th>
+    </tr>
+    <tr>
+      <td>
+        <%= f.radio_button :relation, "0" %><%= f.label  "relation_0", "指定なし" %>
+        <%= f.radio_button :relation, "1" %><%= f.label "relation_1", "本人" %>
+        <%= f.radio_button :relation, "2" %><%= f.label "relation_2", "本人以外" %>
+      </td>
+    </tr>
+    <tr>
+      <th>配信日時</th>
+    </tr>
+    <tr>
+      <td>
+        <%= radio_button_tag "select_delivery", "0", radio_checked?("0",params[:select_delivery]) %>
+        <%= label_tag  "select_delivery_0", "即時配信" %>
+        <br /><br />
+        <%= radio_button_tag "select_delivery", "1", radio_checked?("1",params[:select_delivery]) %>
+        <%= label_tag "select_delivery_1", "送信日時予約" %><br />
+        <span style="width:400px;margin: 30px;text-align:center;">
+        <% fields_for "mail_summary[delivery_reserve_time_attributes]", @mail_summary.delivery_reserve_time do |drtf| %>
+          <%= drtf.datetime_select(:delivery_reserve_time, {:start_year => 2010}) %>
+        <% end %>
+        </span>
+      </td>
+    </tr>
+  </table>
+  <% @selection_bodies.each do |body| %>
+    <%= hidden_field_tag "selection[]", body %>
+  <% end %>
+  <%= f.hidden_field :subject %>
+  <%= f.hidden_field :body %>
+  <%#= f.hidden_field :address_for_map %>
+  <br />
+  <%= f.submit "確認" %>
+<% end %>
+

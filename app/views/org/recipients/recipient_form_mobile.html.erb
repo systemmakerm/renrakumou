@@ -1,0 +1,129 @@
+<h1>受信者編集</h1>
+<%= link_to "戻る", detail_org_recipients_path(:id => current_account.recipient.id) %>
+<br />
+<% form_for(current_account, :url => form_params[:url], :html => {:method => :post}) do |f| %>
+  <%= f.error_messages.untaint %>
+  <% fields_for "account[recipient_attributes]", current_account.recipient do |rf| %>
+<span style="color: red;">(＊)は必須入力</span>
+<table class="organize">
+  <tr>
+    <td>受信者名<span style="color: red;">(＊)</span></td>
+  </tr>
+  <tr>
+    <td><%= rf.text_field :name %></td>
+  </tr>
+  <tr>
+    <td>区分<span style="color: red;">(＊)</span></td>
+  </tr>
+  <tr>
+    <td><%= rf.select :relation, options_for_select_relation(params[:relation]) %></td>
+  </tr>
+  <tr>
+    <td>電話番号1<span style="color: red;"></span></td>
+  </tr>
+  <tr>
+    <td><%= rf.text_field :tel1 %></td>
+  </tr>
+  <tr>
+    <td>電話番号2<span style="color: red;"></span></td>
+  </tr>
+  <tr>
+    <td><%= rf.text_field :tel2 %></td>
+  </tr>
+  <% unless @user.group_pickup.blank? %>
+    <tr>
+      <td>グループ</td>
+  </tr>
+  <tr>
+      <td>
+    <% params[:recipient_group].blank? ? group_ids = @group_ids : group_ids = params[:recipient_group] %>
+    <ul>
+    <% @user.group_pickup.each do |group| %>
+      <li style="list-style:none;">
+        <%= image_tag("cl_minous.png", :alt => "") %>
+      <%= check_box_tag "recipient_group[]", group.id, checkbox_is_selected?(group_ids, group.id), :id =>"group_#{group.id}" %>
+      <%= label_tag "group_#{group.id}", h(group.name) %>
+      <% unless group.child_groups.blank? %>
+        <div id='tree_<%= group.id %>'>
+        <% second_num = group.child_groups.count %>
+        <% group.child_groups.each_with_index do |group, i| %>
+          <li style="list-style:none;">
+          <% if i < second_num - 1 %>
+            <%= image_tag("blanch_t.png", :alt => "") %>
+          <% else %>
+            <%= image_tag("blanch_l.png", :alt => "") %>
+          <% end %>
+            <%= image_tag("cl_minous.png", :alt => "") %>
+          <%= check_box_tag "recipient_group[]", group.id, checkbox_is_selected?(group_ids, group.id), :id =>"group_#{group.id}" %>
+          <%= label_tag "group_#{group.id}", h(group.name) %>
+          <% unless group.child_groups.blank? %>
+            <div id='tree_<%= group.id %>'>
+            <% third_num = group.child_groups.count %>
+            <% group.child_groups.each_with_index do |group, j| %>
+              <li style="list-style:none;">
+              <% if j < third_num - 1 %>
+                <%= image_tag("blanch_t.png", {:alt => "", :style => "margin-left:28px;"}) %>
+              <% else %>
+                <%= image_tag("blanch_l.png", {:alt => "", :style => "margin-left:28px;"}) %>
+              <% end %>
+               <%= check_box_tag "recipient_group[]", group.id, checkbox_is_selected?(group_ids, group.id), :id =>"group_#{group.id}" %>
+               <%= label_tag "group_#{group.id}", h(group.name) %>
+              </li>
+            <% end %>
+            </div>
+          <% end %>
+          </li>
+        <% end %>
+        </div>
+      <% end %>
+      </li>
+      <% end %>
+    </ul>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+  <% end %>
+  <table class="organize">
+    <tr>
+      <td>メールアドレス<span style="color: red;">(＊)</span></td>
+  </tr>
+  <tr>
+      <td><%= f.text_field :login %></td>
+    </tr>
+    <tr>
+      <td>確認用メールアドレス<span style="color: red;">(＊)</span></td>
+  </tr>
+  <tr>
+      <td><%= f.text_field :login_confirmation %></td>
+    </tr>
+  </table>
+  ※パスワードは6文字以上でお願いします。
+  <table class="organize">
+    <tr>
+      <td>パスワード
+        <% if current_account.recipient.new_record? %>
+         <span style="color: red;">(＊)</span>
+        <% end %>
+      </td>
+  </tr>
+  <tr>
+      <td><%= f.password_field :password %></td>
+    </tr>
+    <tr>
+      <td>確認用パスワード
+        <% if current_account.recipient.new_record? %>
+          <span style="color: red;">(＊)</span>
+        <% end %>
+      </td>
+  </tr>
+  <tr>
+      <td><%= f.password_field :password_confirmation %></td>
+    </tr>
+  </table>
+  <%= hidden_field_tag 'account[recipient_attributes][organization_id]', current_account.recipient.organization_id %>
+  <%= hidden_field_tag 'account[recipient_attributes][user_id]', @user.id %>
+  <%= f.submit "確認" %>
+<% end %>
+

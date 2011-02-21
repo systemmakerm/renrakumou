@@ -1,0 +1,57 @@
+<h1>管理者<%= @account.administrator.new_record? ? "登録" : "編集" %></h1>
+<%= @account.administrator.new_record? ? link_to("管理者一覧に戻る", org_administrators_path) : link_to("戻る", org_administrator_path(@account.administrator)) %>
+<br /><br />
+<% form_for(@account, :url => form_params[:url], :html => {:method => :post}) do |f| %>
+  <%= f.error_messages.untaint %>
+  <% fields_for "account[administrator_attributes]", @account.administrator do |af| %>
+    <span style="color: red;">(＊)は必須入力</span>
+    <table class="organize">
+      <tr>
+        <th>管理者名<span style="color: red;">(＊)</span></th>
+        <td><%= af.text_field :name %></td>
+      </tr>
+    </table>
+  <% end %>
+  <table class="organize">
+    <tr>
+      <th>メールアドレス<span style="color: red;">(＊)</span></th>
+      <td><%= f.text_field :login %></td>
+    </tr>
+    <tr>
+      <th>確認用メールアドレス
+        <span style="color: red;">(＊)</span>
+      </th>
+      <td>
+        <% if @account.administrator.new_record? %>
+          <%= f.text_field :login_confirmation %>
+        <% else %>
+          <%= f.text_field :login %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+  <% if !@account.administrator.new_record? %>
+    ※パスワードを変更される場合のみご入力下さい。
+  <% end %>
+  <table class="organize">
+    <tr>
+      <th>パスワード
+        <% if @account.administrator.new_record? %>
+        <span style="color: red;">(＊)</span>
+        <% end %>
+      </th>
+      <td><%= f.password_field :password %></td>
+    </tr>
+    <tr>
+      <th>確認用パスワード
+        <% if @account.administrator.new_record? %>
+        <span style="color: red;">(＊)</span>
+        <% end %>
+      </th>
+      <td><%= f.password_field :password_confirmation %></td>
+    </tr>
+  </table>
+  <%= hidden_field_tag 'account[administrator_attributes][organization_id]', current_account.organization.id %>
+  <br />
+  <%= f.submit "確認" %>
+<% end %>

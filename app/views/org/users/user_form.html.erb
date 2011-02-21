@@ -1,0 +1,26 @@
+<table>
+  <tr>
+    <td class="userflow_td1">ユーザー<br /><%= @user.new_record? ? "登録" : "編集" %></td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">ユーザー<br /><%= @user.new_record? ? "登録" : "編集" %>確認</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">ユーザー<br /><%= @user.new_record? ? "登録" : "編集" %>完了</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">受信者<br />登録</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">受信者<br />登録確認</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">受信者<br />登録完了</td>
+  </tr>
+</table>
+<% form_for(@user, :url => form_params[:url], :html => {:method => :post}) do |f| %>
+  <h1>ユーザー<%= @user.new_record? ? "登録" : "編集" %></h1>
+  <%= f.error_messages.untaint %><br /><br />
+  <%= render :partial => "/share/user/user_form", :locals => {:f => f} %>
+  <br />
+  <%= hidden_field_tag :account_id, params[:account_id] ? params[:account_id] : @account_id %>
+  <%= hidden_field_tag :org_name, params[:org_name] ? params[:org_name] : @org_name %>
+  <%= f.hidden_field :organization_id %>
+  <%= f.submit "確認" %>
+<% end %>
+

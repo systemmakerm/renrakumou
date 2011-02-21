@@ -1,0 +1,8 @@
+<ul class="rec_mobile">
+  <li>
+    <%= link_to "受信者情報登録/編集", editor_org_recipients_path(:id => current_account.recipient.id) %>
+  </li>
+  <li>
+    <%= link_to "退会手続き" , dissolve_org_recipients_path(:id => current_account.id) %>
+  </li>
+</ul>

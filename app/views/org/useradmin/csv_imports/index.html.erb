@@ -1,0 +1,8 @@
+<%= flash[:notice] %>
+<h1>ユーザーデータCSV取込み</h1>
+
+<% form_tag( {:action => "upload_and_confirm"},{ :multipart => true }) do -%>
+  <%= file_field "file", "csv", "size" => 60 %>
+  <%= submit_tag 'ユーザーデータ取込み' %>
+<% end -%>
+<p><%= link_to "テンプレートのダウンロード", template_downloadable_org_useradmin_csv_imports_path %></p>

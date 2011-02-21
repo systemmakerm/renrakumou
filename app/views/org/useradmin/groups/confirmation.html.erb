@@ -1,0 +1,40 @@
+<h1> ユーザー グループ変更確認</h1>
+
+<% form_tag :action => :selected_update do -%>
+
+  <strong>
+    移動先グループ:
+    <%= @move_group.full_name %>
+    <%= hidden_field_tag "group", @move_group.id %>
+  </strong>
+  <table border='1'>
+    <tbody>
+      <tr>
+        <th>登録番号</th>
+        <th>名前</th>
+        <th>移動元グループ</th>
+      </tr>
+      
+      <% @users.each_with_index do |user, index| -%>
+        <tr>
+          <%= hidden_field_tag "user[#{index}][id]", user.id %>
+          <td>
+            <%= user.number %>
+            <%= hidden_field_tag "user[#{index}][number]", user.number %>
+          </td>
+
+          <td>
+            <%= user.name %>
+            <%= hidden_field_tag "user[#{index}][name]", user.name %>
+          </td>
+          <td>
+            <%= user.groups.map{|g| g.full_name}.join(', ') %>
+          </td>
+        </tr>
+      <% end -%>
+    </tbody>
+  </table>
+
+  <%= submit_tag "戻る", :name => 'cancel' %> |
+  <%= submit_tag "変更" %>
+<% end -%>

@@ -1,0 +1,31 @@
+<table>
+  <tr>
+    <td class="userflow_td3">ユーザー<br />登録</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">ユーザー<br />登録確認</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">ユーザー<br />登録完了</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">受信者<br />登録</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">受信者<br />登録確認</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td1">受信者<br />登録完了</td>
+  </tr>
+</table>
+<h1>受信者登録完了</h1>
+<span style="color:green"><pre><%= flash[:notice] %></pre></span>
+<%= render :partial => "/share/user/user_info", :locals => {:user => @user} %>
+<br />
+<%= render :partial => "/share/recipient/recipient_detail", :locals => {:recipient => @account.recipient} %>
+<br />
+<% form_tag(add_recipient_org_users_path) do %>
+  <%= hidden_field_tag :user_id, @user.id %>
+  <%= hidden_field_tag :organization_id, @account.recipient.organization_id %>
+  <span style="float: left;margin-right: 30px;">
+    <span style="float: left;">
+      <%= submit_tag '続けて受信者登録をする', :name => 'recipient_add' %>
+    </span>
+  </span>
+<% end %>
+<a href="javascript:window.close();" style="float:right;">閉じる</a>

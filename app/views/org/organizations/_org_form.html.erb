@@ -1,0 +1,79 @@
+  <table class="organize">
+    <tr>
+      <th>団体名<span style="color: red;">(＊)</span></th>
+      <td>
+        <%= of.text_field :name %>
+      </td>
+    </tr>
+    <tr>
+      <th>団体の種類<span style="color: red;">(＊)</span></th>
+      <td>
+        <%= of.select :purpose, select_purpose, :selected => @purpose %><br />
+        ※その他を選択された方は下にご入力ください。<br />
+        <%= text_area_tag :purpose %>
+      </td>
+    </tr>
+    <tr>
+      <th>代表者名<span style="color: red;">(＊)</span></th>
+      <td>
+        <%= of.text_field :leader_name %>
+      </td>
+    </tr>
+    <tr>
+      <th>フリガナ</th>
+      <td>
+        <%= of.text_field :kana %>
+      </td>
+    </tr>
+    <tr>
+      <th>性別<span style="color: red;">(＊)</span></th>
+      <td>
+        <%= of.radio_button :sex , 0 %><%=  of.label :sex_0 ,"男" %>
+        <%= of.radio_button :sex , 1 %><%=  of.label :sex_1 ,"女" %>
+      </td>
+    </tr>
+    <tr>
+      <th>郵便番号<span style="color: red;">(＊)</span></th>
+      <td>
+        <%= of.text_field :zip %>
+      </td>
+    </tr>
+    <tr>
+      <th>都道府県<span style="color: red;">(＊)</span></th>
+      <td>
+        <%= of.select :prefecture, select_prefectures, :selected => @prefecture %>
+      </td>
+    </tr>
+    <tr>
+      <th>住所1<span style="color: red;">(＊)</span></th>
+      <td>
+        <%= of.text_field :address1 %>
+      </td>
+    </tr>
+    <tr>
+      <th>住所2</th>
+      <td>
+        <%= of.text_field :address2 %>
+      </td>
+    </tr>
+    <tr>
+      <th>TEL<span style="color: red;">(＊)</span></th>
+      <td>
+        <%= of.text_field :tel %>
+      </td>
+    </tr>
+    <tr>
+      <th>FAX</th>
+      <td>
+        <%= of.text_field :fax %>
+      </td>
+    </tr>
+    <tr>
+      <th>受信者による<br />所属グループ設定の可否</th>
+      <td>
+        <input type="radio" name="example" value="" checked>管理者のみ設定可能</input><br />
+        <input type="radio" name="example" value="">管理者・受信者ともに設定可能</input>
+      </td>
+    </tr>
+  </table>
+

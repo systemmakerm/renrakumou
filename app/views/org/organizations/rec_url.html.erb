@@ -1,0 +1,16 @@
+<div style="margin-top:30px;margin-left:80px;width:700px;text-align: left">
+受信者ご本人様にメールアドレス等の情報を登録していただくためのページです。
+<br />
+<div style="width:400;margin-left:150px;">
+<h1><%= @organization.name %>連絡網</h1>
+
+受信する端末からメールを送っていただくアドレスです。<br /><br />
+<%= @organization.rec_mail_addr %>
+</div><br />
+<div style="width:600px;text-align:center;">
+※バーコードリーダ機能付きでしたら下のQRコードをご利用下さい。<br />
+<%= image_tag("rec_qrcode#{@organization.id}.jpg", {:alt => "", :style => "width:180px;height:180px"}) %>
+</div>
+<span style="float:left;margin-top:5px;">上記アドレス宛にメール（本文は空のままで）を送っていただきましたら、返信のメールが届きますので本文の指示に従って登録手続きを進めて下さい。</span>
+</div>
+

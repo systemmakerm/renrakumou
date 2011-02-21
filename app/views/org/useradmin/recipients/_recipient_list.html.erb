@@ -1,0 +1,29 @@
+<h2>受信者一覧</h2>
+  <table>
+    <tr>
+      <td class="recipients_td1">受信者名</td>
+      <td class="recipients_td2">メールアドレス</td>
+      <td class="recipients_td3">区分</td>
+<!--      <td style="text-align:center">グループ</td>-->
+    </tr>
+    <% user.recipients.each do |recipient| %>
+      <tr>
+        <td class="recipients_td1">
+          <%= link_to recipient.name, detail_org_useradmin_recipients_path(:id => recipient.id) %>
+        </td>
+        <td class="recipients_td2">
+          <%= recipient.account.login %>
+        </td>
+        <td class="recipients_td3">
+          <%= recipient.relation %>
+        </td>
+<!--        <td>
+        <%# unless recipient.recipient_groups.blank? %>
+          <%# recipient.recipient_groups.each_with_index do |recipient_group, i| %>
+          <%#= i > 0 ? "," : "" %><%#= recipient_group.group.full_name %>
+          <%# end %>
+        <%# end %>
+        </td>-->
+      </tr>
+    <% end %>
+  </table>

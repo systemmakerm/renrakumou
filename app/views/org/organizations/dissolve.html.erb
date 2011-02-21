@@ -1,0 +1,21 @@
+<h1>解約</h1>
+<%= link_to "戻る", org_organization_path(@organization) %>
+<br /><br />
+ページ下部の「解約」ボタンを押すと連絡網システムから
+団体『
+<%= @organization.name %>
+』
+の登録を解約します。
+<br /><br />
+※この操作をされている団体代表者の方だけでなく、団体の管理者や受信者全員がログイン不能になりますのでご注意ください。
+<br />
+解約しないときは「戻る」をクリックして下さい。
+<br />
+<p>よろしければご解約の理由を、またご意見・ご要望等ございましたら、下記に記入お願いいたします。</p>
+<% form_tag(org_stop_org_organizations_path) do %>
+  <%= text_area_tag :comment , "", :cols => 50, :rows => 7 %>
+  <br /><br />
+  <%= hidden_field_tag :id, @organization.account.id %>
+  <%= submit_tag '解約する', :confirm=>'「OK」を押すと解約が決定します。よろしいですか？', :class=>'float-right' %>
+<% end %><br />
+

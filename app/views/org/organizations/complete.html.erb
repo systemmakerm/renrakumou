@@ -1,0 +1,101 @@
+<table>
+  <tr>
+    <td class="userflow_td3">団体<br />登録</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">団体<br />登録確認</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">団体<br />仮登録完了</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">団体仮登録<br />完了メール</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">団体<br />本登録確認</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td1">団体<br />本登録完了</td>
+  </tr>
+</table>
+<h1>本登録が完了しました。</h1>
+
+<%= button_to "ログイン画面へ", root_path %>
+<br /><br />
+
+有効年月日：
+<%= @account.organization.valid_date.strftime("%Y/%m/%d") %>
+<br /><br />
+		<table class="organize">
+			<tr>
+				<th>団体名</th>
+				<td>
+          <%= @account.organization.name -%>
+        </td>
+			</tr>
+			<tr>
+				<th>使用目的</th>
+				<td>
+          <%= @account.organization.purpose %><br />
+				</td>
+			</tr>
+			<tr>
+				<th>代表者名</th>
+				<td>
+          <%= @account.organization.leader_name %>
+        </td>
+			</tr>
+			<tr>
+				<th>フリガナ</th>
+				<td>
+          <%= @account.organization.kana %>
+        </td>
+			</tr>
+			<tr>
+				<th>性別</th>
+				<td>
+          <% unless @account.organization.sex.nil? %>
+           <%= @account.organization.leader_sex? %>
+          <% end %>
+				</td>
+			</tr>
+			<tr>
+				<th>郵便番号</th>
+				<td>
+          <%= @account.organization.zip %>
+        </td>
+			</tr>
+			<tr>
+				<th>都道府県</th>
+				<td>
+          <%= @account.organization.prefecture %>
+				</td>
+			</tr>
+			<tr>
+				<th>住所1</th>
+				<td>
+          <%= @account.organization.address1 %>
+        </td>
+			</tr>
+			<tr>
+				<th>住所2</th>
+				<td>
+          <%= @account.organization.address2 %>
+        </td>
+			</tr>
+			<tr>
+				<th>TEL</th>
+				<td>
+          <%= @account.organization.tel %>
+        </td>
+			</tr>
+			<tr>
+				<th>FAX</th>
+				<td>
+          <%= @account.organization.fax %>
+        </td>
+			</tr>
+			<tr>
+				<th>メールアドレス</th>
+				<td>
+          <%= @account.login %>
+        </td>
+			</tr>
+		</table>
+
+

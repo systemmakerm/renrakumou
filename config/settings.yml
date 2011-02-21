@@ -1,0 +1,7 @@
+host: "http://localhost:3000"
+mail: "@mail domain"
+org_address: "@mail domain"
+login: "http://localhost:3000/session/new"
+get_answer: "http://localhost:3000/org/sendmail/mail_summaries/get_answer/"
+number_check: "http://localhost:3000/org/recipients/number_check/"
+qr_save_path: "public/images/"

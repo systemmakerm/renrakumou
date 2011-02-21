@@ -1,0 +1,28 @@
+<h1>ユーザー明細</h1>
+<%= link_to "ユーザー検索に戻る", search_org_useradmin_users_path %>
+<br /><br />
+<%= render :partial => "/share/user/user_complete", :locals => {:user => @user} %>
+<br /><br />
+<% form_tag(after_detail_org_useradmin_users_path) do %>
+  <%= hidden_field_tag :user_id, @user.id %>
+  <span style="float: left;">
+    <span style="float: left;">
+      <%= submit_tag '受信者登録', :name => 'recipient_add' %>
+    </span>
+    <span style="float: left; margin-left:250px;">
+      <%= submit_tag 'ユーザー編集', :name => 'user_edit' %>
+    </span>
+  </span>
+<% end %>
+<% form_tag(delete_org_useradmin_users_path) do %>
+  <%= hidden_field_tag :user_id, @user.id %>
+  <span style="float: left; margin-left:20px;">
+    <%= submit_tag 'ユーザー削除', :confirm=>'ユーザー・受信者を削除します。よろしいですか？' %>
+  </span>
+<% end %>
+<br /><br />
+<span style="color:green"><pre><%= flash[:notice] %></pre></span>
+<% if @user.recipients.present? %>
+  <%= render :partial => "/org/useradmin/recipients/recipient_list", :locals => {:user => @user} %>
+<% end %>
+

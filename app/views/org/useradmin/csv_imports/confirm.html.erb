@@ -1,0 +1,22 @@
+<h1>ユーザーデータ取込み確認</h1>
+登録番号 &nbsp;
+名前 &nbsp;
+グループ
+<% form_tag( {:action => "create"} ) do -%>
+  <% @users.each_with_index do |user, i| %>
+    <ul style="list-style: none;">
+      <li>
+      <span><%= user.number %></span>
+      <span><%= user.name %></span>
+      <span><%= user.memo %></span>
+        <%= hidden_field_tag "user[#{i}][number]", user.number %>
+        <%= hidden_field_tag "user[#{i}][name]", user.name %>
+        <%= hidden_field_tag "user[#{i}][memo]", user.memo %>
+      </li>
+    </ul>
+  <% end -%>
+
+  <%= submit_tag "戻る", :name => 'cancel' %> |
+  <%= submit_tag "保存" %>
+<% end -%>
+

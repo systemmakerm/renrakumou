@@ -1,0 +1,51 @@
+<a name="result"></a>
+<% if @users.present? -%>
+  <% form_tag(select_user_org_useradmin_users_path) do %>
+    <p> ユーザー検索結果 : <%= @user_num %>人
+    <%#= submit_tag '登録番号の出力' , :name => 'adr_csv' %>
+    </p>
+    <div style="width:650px;text-align:center">
+    <table>
+      <tr>
+        <th class="result_th" rowspan="2">登録番号</th>
+        <th class="result_th" rowspan="2">ユーザー名</th>
+        <th class="result_th" rowspan="2">グループ</th>
+        <th class="result_th" colspan="2">メールアドレス</th>
+      </tr>
+      <tr>
+        <th class="result_th">本人</th>
+        <th class="result_th">本人以外</th>
+      </tr>
+      <% @users.each do |user| -%>
+        <tr>
+          <td class="result_td1">
+            <%= user.number %>
+          </td>
+          <td class="result_td2">
+            <%= link_to user.name, detail_org_useradmin_users_path(:id => user.id) %>
+          </td>
+          <td class="result_td2">
+            <% unless user.user_groups.blank? %>
+              <% user.user_groups.each do |user_group| %>
+                <%= user_group.group.full_name %><br />
+              <% end %>
+            <% end %>
+          </td>
+          <td class="result_td3">
+            <%= user.has_mailaddr? %>
+          </td>
+          <td class="result_td3">
+            <%= user.has_other_mailaddr? %>
+          </td>
+        </tr>
+      <% end -%>
+    </table>
+    <%= will_paginate(@users, :params => {
+          :group_id       => params[:group_id],
+          :number         => params[:number],
+          :name           => params[:name]},
+          :previous_label => '前', :next_label => '次') -%>
+    </div>
+    <div style="margin-top:10px;"><%= button_to "新規登録", new_org_useradmin_user_path %></div>
+  <% end %>
+<% end -%>

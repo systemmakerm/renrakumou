@@ -1,0 +1,18 @@
+<h1>退会</h1>
+<%= link_to "戻る", detail_org_recipients_path(:id=>@account.recipient.id) %>
+<br /><br />
+ページ下部の「退会」ボタンを押すと
+<%= @account.recipient.organization.name %>連絡網
+から退会します。
+<br /><br />
+※ログイン不能になりますのでご注意ください。
+<br />
+<br />
+退会しないときは「戻る」をクリックして下さい。
+<br />
+<br />
+<% form_tag(decide_dissolve_org_recipients_path) do  %>
+  <%= hidden_field_tag :id, @account.id %>
+  <%= submit_tag '退会', :confirm=>'「OK」を押すと退会が決定します。よろしいですか？', :class=>'float-right' %>
+<% end %><br />
+

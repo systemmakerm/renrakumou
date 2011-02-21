@@ -1,0 +1,49 @@
+<table class="org_info">
+  <tr>
+    <th>団体名</th>
+    <td><%= @organization.name -%></td>
+  </tr>
+  <tr>
+    <th>使用目的</th>
+    <td><pre><%= @organization.purpose %></pre></td>
+  </tr>
+  <tr>
+    <th>代表者名</th>
+    <td><%= @organization.leader_name %></td>
+  </tr>
+  <tr>
+    <th>フリガナ</th>
+    <td>
+      <%= @organization.kana %>
+    </td>
+  </tr>
+  <tr>
+    <th>性別</th>
+    <td><%= @organization.leader_sex? unless @organization.sex.nil? %></td>
+  </tr>
+  <tr>
+    <th>郵便番号</th>
+    <td><%= @organization.zip %></td>
+  </tr>
+  <tr>
+    <th>都道府県</th>
+    <td><%= @organization.prefecture %></td>
+  </tr>
+  <tr>
+    <th>住所1</th>
+    <td><%= @organization.address1 %></td>
+  </tr>
+  <tr>
+    <th>住所2</th>
+    <td><%= @organization.address2 %></td>
+  </tr>
+  <tr>
+    <th>TEL</th>
+    <td><%= @organization.tel %></td>
+  </tr>
+  <tr>
+    <th>FAX</th>
+    <td><%= @organization.fax %></td>
+  </tr>
+</table>
+<br />

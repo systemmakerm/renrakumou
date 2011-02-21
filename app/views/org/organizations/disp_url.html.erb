@@ -1,0 +1,19 @@
+
+<div style="margin-top:30px;margin-left:80px;width:700px;text-align: left">
+※このページを印刷し受信者様にお渡しすれば、団体代表者によるユーザー・受信者登録の手間を省くことができます。<br />
+　但しこのメールアドレスさえあれば誰でも当連絡網に登録できるため、受信者を限定できない事に一切責任を持てませんのでご了承下さい。<br />
+<br />
+<div style="width:400;margin-left:150px;">
+<h1><%= @organization.name %>連絡網</h1>
+
+受信様ご本人に登録をしていただく場合に、<br />
+受信する端末からメールを送っていただくアドレスです。<br /><br />
+<%= @organization.org_mail_addr %>
+</div><br />
+<div style="width:600px;text-align:center;">
+※バーコードリーダ機能付きでしたら下のQRコードをご利用下さい。<br />
+<img src="/images/qrcode<%= @organization.id %>.jpg" alt="" style="width:180px;height:180px"></img>
+</div>
+<span style="float:left;margin-top:5px;">上記アドレス宛にメール（本文は空のままで）を送っていただきましたら、返信のメールが届きますので本文の指示に従って登録手続きを<br />進めて下さい。</span>
+</div>
+

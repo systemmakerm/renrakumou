@@ -1,0 +1,60 @@
+<h1>受信者明細</h1>
+<h3>ユーザー情報</h3>
+<table class="user_info">
+  <tr>
+    <th>登録番号:</th>
+    <td><%= @user.number %></td>
+  </tr>
+  <tr>
+    <th>ユーザー名</th>
+    <td><%= @user.name %></td>
+  </tr>
+  <tr>
+    <th>メモ:</th>
+    <td><%= @user.memo %></td>
+  </tr>
+</table>
+<br />
+<table class="organize">
+  <tr>
+    <th>受信者名<span style="color: red;">(必須)</span></th>
+    <td><%= @recipient.name %></td>
+  </tr>
+  <tr>
+    <th>メールアドレス<span style="color: red;">(必須)</span></th>
+    <td><%= @recipient.email %></td>
+  </tr>
+  <tr>
+    <th>電話番号</th>
+    <td><%= @recipient.tel1 %></td>
+  </tr>
+  <tr>
+    <th>電話番号2</th>
+    <td><%= @recipient.tel2 %></td>
+  </tr>
+  <tr>
+    <th>続柄</th>
+    <td><%= @recipient.relation %></td>
+  </tr>
+  <% unless @recipient.recipient_groups.blank? %>
+  <tr>
+    <th>グループ</th>
+    <td>
+      <% @recipient.recipient_groups.each do |recipient_group| %>
+      <%= recipient_group.group.full_name %><br />
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+<br /><br />
+<span style="float: left;">
+  <%= button_to "編集", edit_org_useradmin_recipient_path(@recipient) %>
+</span>
+
+<span style="float: left;margin-left:50px;">
+  <% form_tag(delete_org_useradmin_recipients_path) do %>
+    <%= hidden_field_tag :id, @recipient.id %>
+    <%= submit_tag '削除', :confirm=>'本当に削除していいですか？', :class=>'float-right' %>
+  <% end %>
+</span>

@@ -1,0 +1,24 @@
+<h1>管理者明細</h1>
+<%= link_to("管理者一覧に戻る", org_administrators_path) %>
+<br /><br />
+<table class="organize">
+  <tr>
+    <th>管理者名<span style="color: red;">(＊)</span></th>
+    <td><%= @administrator.name %></td>
+  </tr>
+  <tr>
+    <th>メールアドレス<span style="color: red;">(＊)</span></th>
+    <td><%= @administrator.account.login %></td>
+  </tr>
+</table>
+<br /><br />
+<span style="float: left;">
+  <%= link_to "編集", edit_org_administrator_path(@administrator) %>
+</span>
+<span style="float: left;margin-left:20px;">
+  <% form_tag(delete_admin_org_administrators_path) do %>
+    <%= hidden_field_tag :admin_id, @administrator.id %>
+    <%= submit_tag '削除', :confirm=>'この管理者を削除します。よろしいですか？', :class => "float-right" %>
+  <% end %>
+</span>
+

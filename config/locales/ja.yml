@@ -1,0 +1,201 @@
+ja:
+  Login:                      ログイン
+  Logout:                     ログアウト
+  Password:                   パスワード
+  New:                        新規登録
+  Edit:                       編集
+  Signup:                     登録
+  Show:                       詳細表示
+  Submit:                     送信
+  CommentSubmit:              投稿
+  Destroy:                    削除
+  Resetpassword:              パスワード再発行
+  Confirmation:               確認する
+  Regist:                     登録申請
+  Form_back:                  入力画面に戻る
+  Attachment_Form:            画像入力
+  Approve:                    承認
+  NotApprove:                 却下
+  Save:                       保存
+  Save_Attachment:            "保存し画像登録画面へ進む"
+  Cancel:                     キャンセル
+  Temp_save:                  一時保存
+  Update:                     更新
+  Search:                     検索
+  Index:                      一覧
+  org_id:                     団体コード
+
+  account:  &account
+      login:                  メールアドレス
+      login_confirmation:     確認用メールアドレス
+      password:               パスワード
+      password_confirmation:  確認用パスワード
+
+  organization: &organization
+      account_id:     アカウント
+      name:           団体名
+      leader_name:    代表者名
+      kana:           フリガナ
+      sex:            性別
+      zip:            郵便番号
+      prefecture:     都道府県
+      address1:       住所1
+      address2:       住所2
+      tel:            電話番号
+      fax:            FAX
+      email:          メールアドレス
+      purpose:        使用目的
+      valid_date:     有効年月日
+
+  administrator:  &administrator
+      name:           管理者名
+
+  group:  &group
+      name:           グループ名
+
+  user: &user
+      number:         登録番号
+      name:           ユーザー名
+
+  recipient:  &recipient
+      name:           受信者名
+      email:          メールアドレス
+      tel1:           電話番号1
+      tel2:           電話番号2
+      relation:       続柄
+
+  sentence: &sentence
+      group_name:           親ひな形グループ名
+      parent_sentence_id:   親ひな形グループ
+      subject:              ひな形件名
+      body:                 ひな形本文
+
+  mail_summary: &mail_summary
+      subject:            件名
+      body:               本文
+      address_for_map:    地図用住所
+
+  selection:  &selection
+      number:             回答番号
+      body:               回答本文
+
+  activerecord:
+    models:
+      account:               入力項目
+      organization:          団体
+      administrator:         管理者
+      group:                 グループ
+      user:                  ユーザー
+      recipient:             受信者
+      sentence:              ひな形
+      mail summary:          メール作成
+      selection:             回答選択肢
+
+
+    attributes:
+      account:
+        <<: *account
+      organization:
+        <<: *organization
+      administrator:
+        <<: *administrator
+      group:
+        <<: *group
+      user:
+        <<: *user
+      recipient:
+        <<: *recipient
+      sentence:
+        <<: *sentence
+      mail_summary:
+        <<: *mail_summary
+
+
+    errors:
+      format:
+        separator: ""
+      template:
+        header:
+          one:   "{{model}}にエラーが発生しました。"
+          other: "{{model}}に{{count}}個のエラーが発生しました。"
+        body: "次の項目を確認してください。"
+
+
+      messages:
+        inclusion: "は一覧にありません。"
+        exclusion: "は予約されています。"
+        invalid: "は不正な値です。"
+        confirmation: "が一致しません。"
+        accepted: "を受諾してください。"
+        empty: "を入力してください。"
+        blank: "を入力してください。"
+        too_long: "は{{count}}文字以内で入力してください。"
+        too_short: "は{{count}}文字以上で入力してください。"
+        wrong_length: "は{{count}}文字で入力してください。"
+        taken: "はすでに存在します。"
+        not_a_number: "は数値で入力してください。"
+        greater_than: "は{{count}}より大きい値にしてください。"
+        greater_than_or_equal_to: "は{{count}}以上の値にしてください。"
+        equal_to: "は{{count}}にしてください。"
+        less_than: "は{{count}}より小さい値にしてください。"
+        less_than_or_equal_to: "は{{count}}以下の値にしてください。"
+        odd: "は奇数にしてください。"
+        even: "は偶数にしてください。"
+        record_invalid: "バリデーションに失敗しました。{{errors}}"
+
+  date:
+    formats:
+      default: "%Y/%m/%d"
+      short: "%m/%d"
+      long: "%Y年%m月%d日(%a)"
+
+    day_names: [日曜日, 月曜日, 火曜日, 水曜日, 木曜日, 金曜日, 土曜日]
+    abbr_day_names: [日, 月, 火, 水, 木, 金, 土]
+
+    month_names: [~, '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+    abbr_month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+
+    order: [:year, :month, :day]
+
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+      short: "%y/%m/%d %H:%M"
+      long: "%Y年%m月%d日(%a) %H時%M分%S秒 %Z"
+    am: "午前"
+    pm: "午後"
+
+  number:
+    format:
+      separator: "."
+      delimiter: ","
+      precision: 3
+
+    currency:
+      format:
+        format: "%n%u"
+        unit: "円"
+        separator: "."
+        delimiter: ","
+        precision: 0
+
+    percentage:
+      format:
+        delimiter: ""
+
+    precision:
+      format:
+        delimiter: ""
+
+    human:
+      format:
+        delimiter: ""
+        precision: 1
+      storage_units:
+        format: "%n%u"
+        units:
+          byte: "Byte"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"

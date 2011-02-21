@@ -1,0 +1,57 @@
+<span style="padding-left:8px;font-size:18px;">
+スーパー管理者<br />メニュー
+</span>
+<ul class="top">
+  <li>
+    団体管理
+  </li>
+</ul>
+<ul class="middle">
+  <li>
+    <%= link_to "団体一覧", org_list_org_organizations_path %>
+  </li>
+</ul>
+<ul class="middle">
+  <li class="middle">
+    <%= link_to "団体登録", new_org_organization_path %>
+  </li>
+</ul>
+<ul class="top">
+  <li>
+    <%= link_to "メール作成", new_org_sendmail_mail_summary_path %>
+  </li>
+</ul>
+<ul class="top">
+  <li>
+    <%= link_to "メール一覧" %>
+  </li>
+</ul>
+<ul class="top">
+  <li>
+    マスタ管理
+  </li>
+</ul>
+<ul class="middle">
+  <li class="middle">
+    <%= link_to "グループ一覧" %>
+  </li>
+  <li class="middle">
+    <%= link_to "メールひな形一覧" %>
+  </li>
+</ul>
+<ul class="top">
+  <li>
+    ユーザー管理
+  </li>
+</ul>
+<ul class="middle">
+  <li class="middle">
+    <%= link_to "ユーザー検索/登録" %>
+  </li>
+  <li class="middle">
+    <%= link_to "ユーザーグループ変更" %>
+  </li>
+  <li class="middle">
+    <%= link_to "ユーザーデータCSV取り込み" %>
+  </li>
+

@@ -1,0 +1,54 @@
+<table>
+  <tr>
+    <td>件名・本文<br />作成</td>
+    <td>&gt;</td>
+    <td>送信先・日時<br />設定</td>
+    <td>&gt;</td>
+    <td>メール<br />作成確認</td>
+    <td>&gt;</td>
+    <td>メール<br />作成完了</td>
+  </tr>
+</table>
+
+<% form_for(@mail_summary, :url => select_params[:url], :html => {:method => :post}) do |f| -%>
+  <h1>メール送信先・日時設定</h1>
+  <%= f.submit "戻る", :name => 'cancel' %><br />
+  <%= f.error_messages.untaint %>
+  <span style="color: red;">(＊)は必須入力</span>
+  <table class="mail_form">
+    <tr>
+      <th>送信先<span style="color: red;">(*)</span></th>
+    </tr>
+    <tr>
+      <td>
+        <%= mobile_tree_groups %>
+      </td>
+    </tr>
+    <tr>
+      <th>配信日時</th>
+    </tr>
+    <tr>
+      <td>
+        <%= radio_button_tag "select_delivery", "0", radio_checked?("0",params[:select_delivery]) %>
+        <%= label_tag  "select_delivery_0", "即時配信" %>
+        <br />
+        <%= radio_button_tag "select_delivery", "1", radio_checked?("1",params[:select_delivery]) %>
+        <%= label_tag "select_delivery_1", "送信日時予約" %><br />
+        <span style="width:400px;margin: 30px;text-align:center;">
+        <% fields_for "mail_summary[delivery_reserve_time_attributes]", @mail_summary.delivery_reserve_time do |drtf| -%>
+          <%= drtf.datetime_select(:delivery_reserve_time, {:start_year => 2010}) %>
+        <% end %>
+        </span>
+      </td>
+    </tr>
+  </table>
+  <% @selection_bodies.each do |body| -%>
+    <%= hidden_field_tag "selection[]", body %>
+  <% end -%>
+  <%= f.hidden_field :subject %>
+  <%= f.hidden_field :body %>
+  <%#= f.hidden_field :address_for_map %>
+  <br />
+  <%= f.submit "確認" %>
+<% end -%>
+

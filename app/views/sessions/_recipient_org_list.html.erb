@@ -1,0 +1,16 @@
+<table>
+  <tr>
+    <th>団体コード</th>
+    <th>団体名・ユーザ名</th>
+  </tr>
+  <% @accounts.each do |account| %>
+    <tr>
+      <td>
+        <%= account.recipient.organization_id %>
+      </td>
+      <td>
+        <%= link_to "#{account.recipient.organization.name}:#{account.recipient.user.name}", select_org_sessions_path(:account_id => account.id) %>
+      </td>
+    </tr>
+  <% end %>
+</table>

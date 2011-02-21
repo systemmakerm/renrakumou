@@ -1,0 +1,43 @@
+<h1>団体一覧</h1>
+<span style="color:green"><pre><%= flash[:notice] %></pre></span>
+<br />
+<table class="org_list">
+  <tbody>
+    <tr>
+      <th>団体<br />コード</th>
+      <th>団体名</th>
+      <th>登録日</th>
+      <th>利用期限</th>
+      <th>状況</th>
+      <th>運用</th>
+      <th>メールアドレス・<br />パスワード変更</th>
+    </tr>
+    <% @organizations.each do |organization| %>
+      <tr>
+        <td style="text-align:center">
+          <%= organization.id %>
+        </td>
+        <td>
+          <%= link_to organization.name, sadmin_org_show_org_organizations_path(:id => organization.id) %>
+        </td>
+        <td>
+          <%= organization.created_at.strftime("%Y/%m/%d") %>
+        </td>
+        <td>
+          <%= organization.valid_date.strftime("%Y/%m/%d") %>
+        </td>
+        <td>
+          <%= organization.implementation? %>
+        </td>
+        <td>
+          <%= stop_or_restart(organization) %>
+        </td>
+        <td>
+          <%= link_to("変更", account_change_org_organizations_path(:id => organization.id)) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+

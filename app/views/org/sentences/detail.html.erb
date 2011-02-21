@@ -1,0 +1,30 @@
+<script type="text/javascript">
+function SenteInsert(Subject, Body){
+  var oya_document =  window.opener.document;
+  oya_document.hoge_form.hoge_subject.value = Subject;
+  oya_document.hoge_form.hoge_box.value = Body;
+}
+</script>
+
+<h2>ひな形明細</h2>
+<span style="float:left;">
+<%= link_to "戻る", insert_list_org_sentences_path %>
+</span>
+<span style="float:left;margin-left:30px;">
+<a href="" onclick="SenteInsert('<%= @sentence.subject.delete("\r\n") %> ', '<%= @sentence.body.delete("\r\n") %>')" >コピー</a>
+</span>
+<div style="clear:both;"></div>
+<div style="margin-bottom:25px;">
+<p style="font-weight:bold">ひな形グループ名：</p>
+<p><%= @sentence.group_name %></p>
+</div>
+<div style="margin-bottom:25px;">
+<p style="font-weight:bold">件名：</p>
+<p><%= @sentence.subject %></p>
+</div>
+<div style="margin-bottom:25px;">
+<p style="font-weight:bold">本文：</p>
+<p><%= @sentence.body %></p>
+</div>
+<a href="javascript:window.close();" style="float:right;">閉じる</a>
+

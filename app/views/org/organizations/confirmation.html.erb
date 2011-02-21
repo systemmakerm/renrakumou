@@ -1,0 +1,36 @@
+<table>
+  <tr>
+    <td class="userflow_td3">団体登録</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td1">団体登録確認</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">団体<br />仮登録完了</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">団体仮登録<br />完了メール</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">団体<br />本登録完了</td>
+  </tr>
+</table>
+<% form_for(@account, :url => confirmation_params[:url], :html => {:method => :post}) do |f| %>
+  <h1>団体登録確認</h1>
+  <%= f.submit "戻る", :name => "cancel"  %>
+  <br /><br />
+  <% @organization = @account.build_organization(params[:account][:organizations_attributes]) %>
+  <% fields_for 'account[organizations_attributes]', @organization do |of| %>
+    <%= render :partial => "org_confirm", :locals => {:of => of} %>
+  <% end %>
+  <table class="organize">
+    <tr>
+      <th>メールアドレス</th>
+      <td>
+        <%= @account.login %>
+      </td>
+    </tr>
+  </table>
+  <%= f.hidden_field :login %>
+  <%= f.hidden_field :login_confirmation %>
+  <%= f.hidden_field :password %>
+  <%= f.hidden_field :password_confirmation %>
+  <br />
+  <%= f.submit "保存" %>  
+<% end %>

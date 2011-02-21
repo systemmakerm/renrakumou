@@ -1,0 +1,16 @@
+<h1>受信者明細</h1>
+<%= link_to "ユーザー明細に戻る", detail_org_useradmin_users_path(:id => @user.id) %>
+<%= render :partial => "/share/user/user_info", :locals => {:user => @recipient.user} %>
+<br />
+<%= render :partial => "/share/recipient/recipient_detail", :locals => {:recipient => @recipient} %>
+<br /><br />
+<span style="float: left;">
+  <%= link_to "編集", edit_org_useradmin_recipient_path(@recipient) %>
+</span>
+
+<span style="float: left;margin-left:50px;">
+  <% form_tag(delete_org_useradmin_recipients_path) do %>
+    <%= hidden_field_tag :id, @recipient.id %>
+    <%= submit_tag '削除', :confirm=>'この受信者を削除します。よろしいですか？', :class=>'float-right' %>
+  <% end %>
+</span>

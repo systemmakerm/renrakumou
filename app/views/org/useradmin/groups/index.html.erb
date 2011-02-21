@@ -1,0 +1,55 @@
+<h1>ユーザー グループ変更</h1>
+<h3>検索条件</h3>
+<% if flash[:notice] -%>
+  <span style="color:green"><pre><%= flash[:notice] %></pre></span>
+<% end -%>
+<div id="user_search" style="margin-bottom: 50px; ">
+  <% form_tag(search_users_org_useradmin_groups_path ) do -%>
+  <span style="float:left;">
+    グループ：
+    <%= select_tag :group, selectable_groups(current_account.organization.id, params[:group]) %>
+  </span>
+  <div class="clear"></div><br />
+  <span style="float:left;">
+  登録番号：<%= text_field_tag :number, params[:number], :size => 10 %>
+  ユーザー名：<%= text_field_tag :keywords, params[:keywords], :size => 15 %>
+  <span style="floag:left;margin-left:40px;">
+    <%= submit_tag '検索' %>
+  </span>
+  </span>
+  <% end -%>
+</div>
+
+<%# 検索結果 %>
+<% if @users.present? %>
+  <div id="user_result">
+    <% form_tag({:action => 'confirmation'}) do %>
+
+      <!-- #usr_lit -->
+      <table id="usr_list" border="1">
+        <tbody>
+          <tr>
+            <td></td>
+            <td>氏名</td>
+            <td>登録番号</td>
+            <td>グループ</td>
+          </tr>
+          <% @users.each do |user| -%>
+            <tr>
+              <td><%= check_box_tag 'user[]', "#{user.id}" %></td>
+              <td><%= user.name %></td>
+              <td><%= user.number %></td>
+              <td><%= user.groups.map{|g| g.full_name}.join(', ') %></td>
+            </tr>
+          <% end -%>
+        </tbody>
+      </table>
+      <!-- /#usr_lit -->
+      <div style="margin-top:15px;">
+        移動先: <%= select_tag :group_by_move,
+          selectable_groups(current_account.organization.id, params[:group_by_move]) %>
+        <%= submit_tag "変更" %>
+      </div>
+    </div>
+  <% end -%>
+<% end -%>

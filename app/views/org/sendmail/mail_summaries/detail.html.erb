@@ -1,0 +1,90 @@
+<h1>メール明細</h1>
+<%= link_to "メール一覧に戻る", org_sendmail_mail_summaries_path %><br /><br />
+<table class="mail_confirm">
+  <tr>
+    <th>件名</th>
+    <td>
+      <%= @mail_summary.subject %>
+    </td>
+  </tr>
+  <tr>
+    <th>本文</th>
+    <td>
+      <%= @mail_summary.body %>
+    </td>
+  </tr>
+  <% unless @mail_summary.selections.blank? %>
+    <tr>
+      <th>回答選択肢</th>
+      <td>
+        <% unless @mail_summary.selections.blank? %>
+          <% @mail_summary.sorted_selections.each do |selection| %>
+            <%= selection.number %>.<%= selection.body %><br />
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  <% unless @mail_summary.address_for_map.blank? %>
+    <tr>
+      <th>地図用住所</th>
+      <td>
+        <%= @mail_summary.address_for_map %>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <th>送信先</th>
+    <td>
+      <% if @mail_summary.all_send && @mail_summary.all_send == 1 %>
+        全体
+      <% else %>
+        <% if @mail_summary.mail_groups.present? %>
+          <% @mail_summary.mail_groups.each do |mail_group| %>
+            <span style="margin-left:10px;"><%= mail_group.group.full_name %></span>
+          <% end %>
+        <% end %>
+        <br />
+        <% if @mail_summary.mail_users.present? %>
+          <% @mail_summary.mail_users.each do |mail_user| %>
+            <span style="margin-left:10px;"><%= mail_user.user.name %></span>
+          <% end %>
+        <% end %>
+        <br />
+        <% if @mail_summary.mail_recipients.present? %>
+          <% @mail_summary.mail_recipients.each do |mail_recipient| %>
+            <span style="margin-left:10px;"><%= mail_recipient.recipient.name %></span>
+          <% end %>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+  <% if @mail_summary.delivery_reserve_time %>
+    <tr>
+      <th>送信予約日時</th>
+      <td>
+        <%= @mail_summary.delivery_reserve_time.delivery_reserve_time.strftime("%Y/%m/%d %H:%M") if @mail_summary.delivery_reserve_time.delivery_reserve_time.present? %>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <th>送信日時</th>
+    <td>
+      <%= @mail_summary.delivery_time.delivery_time.strftime("%Y/%m/%d %H:%M") if @mail_summary.delivery_time && @mail_summary.delivery_time.delivery_time.present? %>
+    </td>
+  </tr>
+</table>
+<br />
+<% unless @mail_summary.delivery_time %>
+  <span style="float: left;">
+    <%= link_to "編集", editor_org_sendmail_mail_summaries_path(:id=>@mail_summary.id) %>
+  </span>
+  <% form_tag(delete_org_sendmail_mail_summaries_path) do %>
+    <%= hidden_field_tag :id, @mail_summary.id %>
+    <span style="float:left; margin-left:20px;">
+      <%= submit_tag '削除', :confirm=>"このメールを削除します。よろしいですか？" %>
+    </span>
+  <% end %>
+<% else %>
+  <%= render :partial => 'search_sent' %>
+<% end %>

@@ -1,0 +1,47 @@
+<a name="result"></a>
+<%= flash[:notice] %><% flash[:notice]=nil %>
+<% if @recipients.present? %>
+  <table class="deli_result">
+    <tr>
+      <th>ユーザー名</th>
+      <th>受信者名</th>
+      <th>区分</th>
+      <% if @mail_summary.selections.present? %>
+        <th>回答状況</th>
+        <th>再送</th>
+        <th>送信エラー</th>
+      <% end %>
+    </tr>
+    <% @recipients.each do |recipient| %>
+      <tr>
+        <td>
+          <%= link_to recipient.user.name, detail_org_useradmin_users_path(:id => recipient.user.id) %>
+        </td>
+        <td>
+          <%= link_to recipient.name, detail_org_useradmin_recipients_path(:id => recipient.id) -%>
+        </td>
+        <td>
+          <%= recipient.relation %>
+        </td>
+        <% if @mail_summary.selections.present? %>
+          <td>
+            <%= recipient_answer(@mail_summary.id, recipient.id) %>
+          </td>
+          <td>
+            <%= retry_checkbox(@mail_summary.id, recipient.id) %>
+          </td>
+          <td>
+            <%= has_smtp_error?(@mail_summary.id, recipient.id) %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  <div style="width:500px;text-align:center">
+  <%= will_paginate(@recipients, :params => {
+        :group_id      => params[:group_id],
+        :name          => params[:name],
+        :ans_situation => params[:ans_situation]},
+        :previous_label => '前', :next_label => '次') -%>
+  </div>
+<% end %>

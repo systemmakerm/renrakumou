@@ -1,0 +1,37 @@
+<h1>メール一覧</h1>
+<span style="color:green"><pre><%= flash[:notice] %></pre></span>
+<% unless @mail_summaries.blank? -%>
+  <table class="mail_list">
+    <tr>
+      <th>件名</th>
+      <th>保存日時</th>
+      <th>送信予定日時</th>
+      <th>送信日時</th>
+    </tr>
+    <% @mail_summaries.each do |mail_summary| -%>
+      <tr>
+        <td class="mail_list_td1">
+          <%= link_to mail_summary.subject, detail_org_sendmail_mail_summary_path(mail_summary) -%>
+        </td>
+        <td class="mail_list_td2">
+          <%= mail_summary.updated_at.strftime("%Y/%m/%d %H:%M") -%>
+        </td>
+        <td class="mail_list_td2">
+          <% if mail_summary.delivery_reserve_time && mail_summary.delivery_reserve_time.delivery_reserve_time -%>
+            <%= mail_summary.delivery_reserve_time.delivery_reserve_time.strftime("%Y/%m/%d %H:%M") -%>
+          <% end -%>
+        </td>
+        <td class="mail_list_td3">
+          <% if mail_summary.delivery_time && mail_summary.delivery_time.delivery_time.present? -%>
+            <%= mail_summary.delivery_time.delivery_time.strftime("%Y/%m/%d %H:%M") -%>
+          <% end -%>
+        </td>
+      </tr>
+    <% end -%>
+  </table>
+  <div style="width:500px;text-align:center">
+  <%= will_paginate(@mail_summaries, :params => {},
+        :previous_label => '前', :next_label => '次') -%>
+  </div>
+<% end -%>
+

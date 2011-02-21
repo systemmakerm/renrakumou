@@ -1,0 +1,20 @@
+<span style="padding-left:8px;font-size:18px;">
+受信者メニュー
+</span>
+<%# if current_account.status == 3 %>
+  <%#*<ul class="middle">%>
+    <%#*<li>%>
+      <%#= link_to "ユーザー情報編集", editor_user_org_recipients_path(:id => current_account.recipient.user.id) %>
+    <%#*</li>%>
+  <%#*</ul>%>
+<%# end %>
+<ul class="middle">
+  <li>
+    <%= link_to "受信者情報編集", editor_org_recipients_path(:id => current_account.recipient.id) %>
+  </li>
+</ul>
+<ul class="middle">
+  <li>
+    <%= link_to "退会手続き" , dissolve_org_recipients_path(:id => current_account.id) %>
+  </li>
+</ul>

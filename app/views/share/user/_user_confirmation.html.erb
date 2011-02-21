@@ -1,0 +1,26 @@
+<table class="user">
+  <tr>
+    <th>登録番号</th>
+    <td><%= user.number %></td>
+  </tr>
+  <tr>
+    <th>ユーザー名</th>
+    <td><%= user.name %></td>
+  </tr>
+  <tr>
+    <th>メモ</th>
+    <td><%= user.memo %></td>
+  </tr>
+  <% if params[:user_group].present? %>
+    <tr>
+      <th>グループ</th>
+      <td>
+        <% @user_groups.each do |group| %>
+          <%= group.full_name %>
+          <%= hidden_field_tag "user_group[]", group.id %><br /><br />
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+

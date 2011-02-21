@@ -1,0 +1,107 @@
+<h1>グループ<%= @group.new_record? ? "登録" : "編集" %></h1>
+<%= @group.new_record? ? link_to("一覧に戻る", org_groups_path) : link_to("戻る", org_group_path(@group)) %>
+<br /><br />
+<% form_for @group, :url => form_params[:url], :html => {:method => form_params[:method]} do |f| %>
+  <%= f.error_messages.untaint %>
+<table class="group_form">
+<tr>
+  <th>上位グループ選択</th>
+  <th>グループ名</th>
+</tr>
+<tr>
+  <td>
+  <br />
+  <span style="margin-left:35px;">
+  <% unless @groups.blank? %>
+    <%= radio_button_tag "group[parent_id]", 0, parent_id?(0, @parent_id), :id=>"group_0" %><%= label_tag "group_0", "指定なし" %>
+  <% else %>
+    未作成
+    <%= hidden_field_tag "group[parent_id]", 0 %>
+  <% end %>
+  </span>
+  <br /><br />
+  <% unless @groups.blank? %>
+    <ul>
+    <% @groups.each do |group| %>
+      <li style="list-style:none;">
+      <% unless group.child_groups.blank? %>
+        <span onclick="Node_Click('tree_<%= group.id %>','open<%= group.id %>','close<%= group.id %>')">
+        <%= image_tag("cl_minous.png", {:id => "close#{group.id}", :style => "width:10px;length:10px;display:none;"}) %>
+        <%= image_tag("op_plus.png", {:id => "open#{group.id}", :style => "width:10px;length:10px;"}) %>
+        </span>
+      <% else %>
+        <%= image_tag("cl_minous.png", :alt => "") %>
+      <% end %>
+      <% if @group.new_record? || (!@group.new_record? && group.id != @group.id) %>
+        <%= radio_button_tag "group[parent_id]", group.id, parent_id?(group.id, @parent_id), :id=>"group_#{group.id}" %>
+      <% else %>
+        <span style="margin-left:5px;">
+        <%= "　" %>
+        </span>
+      <% end %>
+      <%= label_tag "group_#{group.id}", h(group.name) %>
+      <% unless group.child_groups.blank? %>
+        <div>
+          <span id='tree_<%= group.id %>' style='display:none'>
+          <% second_num = group.child_groups.count %>
+          <% group.child_groups.each_with_index do |group, i| %>
+            <li style="list-style:none;">
+            <% if i < second_num - 1 %>
+              <%= image_tag("blanch_t.png", :alt => "") %>
+            <% else %>
+              <%= image_tag("blanch_l.png", :alt => "") %>
+            <% end %>
+            <% unless group.child_groups.blank? %>
+              <span onclick="Node_Click('tree_<%= group.id %>','open<%= group.id %>','close<%= group.id %>')">
+              <%= image_tag("cl_minous.png", {:id => "close#{group.id}", :style => "width:10px;length:10px;display:none;"}) %>
+              <%= image_tag("op_plus.png", {:id => "open#{group.id}", :style => "width:10px;length:10px;"}) %>
+              </span>
+            <% else %>
+              <%= image_tag("cl_minous.png", :alt => "") %>
+            <% end %>
+            <% if @group.new_record? || (!@group.new_record? && group.id != @group.id) %>
+              <%= radio_button_tag "group[parent_id]", group.id, parent_id?(group.id, @parent_id), :id=>"group_#{group.id}" %>
+            <% else %>
+              <span style="margin-left:5px;">
+                <%= "　" %>
+              </span>
+            <% end %>
+            <%= label_tag "group_#{group.id}", h(group.name) %>
+            <% unless group.child_groups.blank? %>
+              <div>
+                <span id='tree_<%= group.id %>' style='display:none'>
+                <% third_num = group.child_groups.count %>
+                <% group.child_groups.each_with_index do |group, j| %>
+                  <li style="list-style:none;">
+                  <% if j < third_num - 1 %>
+                    <%= image_tag("blanch_t.png", {:alt => "", :style => "margin-left:28px;"}) %>
+                  <% else %>
+                    <%= image_tag("blanch_l.png", {:alt => "", :style => "margin-left:28px;"}) %>
+                  <% end %>
+                   <%= group.name %>
+                 </li>
+                <% end %>
+                </span>
+              </div>
+            <% end %>
+            </li>
+          <% end %>
+          </span>
+        </div>
+      <% end %>
+      </li>
+      <% end %>
+    </ul>
+  <% end %>
+  </td>
+  <td style="padding: 20px;">
+    <%= f.text_field :name %><br />
+  </td>
+</tr>
+</table>
+
+  <br /><br />
+  <%= f.submit "保存" %>
+<% end %>
+
+

@@ -1,0 +1,70 @@
+<span style="padding-left:8px;font-size:18px;">
+<%= current_account.organization? ? "団体代表者メニュー" : "管理者メニュー" %>
+</span>
+<ul class="top">
+  <li>
+    メール管理
+  </li>
+</ul>
+<ul class="middle">
+  <li>
+    <%= link_to "メール作成", new_org_sendmail_mail_summary_path %>
+  </li>
+</ul>
+<ul class="middle">
+  <li>
+    <%= link_to "メール一覧" , org_sendmail_mail_summaries_path %>
+  </li>
+</ul>
+
+<% if current_account.status == 0 || current_account.status == 1 %>
+  <ul class="top">
+    <li>
+      マスタ管理
+    </li>
+  </ul>
+  <ul class="middle">
+    <li class="middle">
+      <%= link_to "管理者一覧", org_administrators_path %>
+    </li>
+    <li class="middle">
+      <%= link_to "グループ一覧", org_groups_path %>
+    </li>
+    <li class="middle">
+      <%= link_to "メールひな形一覧", org_sentences_path %>
+    </li>
+  </ul>
+  <ul class="top">
+    <li>
+      ユーザー管理
+    </li>
+  </ul>
+  <ul class="middle">
+    <li class="middle">
+      <%= link_to "ユーザー検索/登録", search_org_useradmin_users_path %>
+    </li>
+    <li class="middle">
+      <%= link_to "受信者登録用アドレス", rec_url_org_organizations_path, :popup => true %>
+    </li>
+    <li class="middle">
+      <%= link_to "ユーザーグループ変更", org_useradmin_groups_path %>
+    </li>
+    <li class="middle">
+    <%= link_to "ユーザーデータCSV取り込み", org_useradmin_csv_imports_path %>
+    </li>
+  </ul>
+  <ul class="top">
+    <li>
+      団体管理
+    </li>
+  </ul>
+  <ul class="middle">
+    <li class="middle">
+      <%= link_to "団体編集", edit_org_organization_path(current_account.organization) %>
+    </li>
+    <li class="middle">
+      <%= link_to "団体解約", dissolve_org_organization_path(current_account.organization) %>
+    </li>
+  </ul>
+<% end %>
+

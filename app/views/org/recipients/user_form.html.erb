@@ -1,0 +1,9 @@
+<% form_for(@user, :url => user_form_params[:url], :html => {:method => :post}) do |f| %>
+  <h1>ユーザー<%= @user.new_record? ? "登録" : "編集" %></h1>
+  <%= f.error_messages.untaint %>
+  <%= render :partial => "/share/user/user_form", :locals => {:f => f} %>
+  <br />
+  <%= f.hidden_field :organization_id %>
+  <%= f.submit "確認" %>
+<% end %>
+

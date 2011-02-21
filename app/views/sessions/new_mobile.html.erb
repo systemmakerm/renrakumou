@@ -1,0 +1,23 @@
+<h1>連絡網システム</h1>
+<p>mobile.</p>
+<% if @message.present? %>
+  <%= @message %>
+  <% @message = nil %>
+  <br />
+<% end %>
+<% form_tag session_path do -%>
+
+<p><%= label_tag 'メールアドレス' %><br />
+<%= text_field_tag 'login', @login %></p>
+
+<p><%= label_tag t('Password') %><br/>
+<%= password_field_tag 'password', nil %></p>
+
+<!-- Uncomment this if you want this functionality
+<p><%= label_tag 'remember_me', 'Remember me' %>
+<%= check_box_tag 'remember_me', '1', @remember_me %></p>
+-->
+
+<p><%= submit_tag 'ログイン' %></p>
+<% end -%>
+

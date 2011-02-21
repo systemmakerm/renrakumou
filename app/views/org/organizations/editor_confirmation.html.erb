@@ -1,0 +1,20 @@
+<table>
+  <tr>
+    <td class="userflow_td1">団体編集</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">団体編集確認</td>
+    <td class="userflow_td2">></td>
+    <td class="userflow_td3">団体<br />編集完了</td>
+  </tr>
+</table>
+<h1>団体編集確認</h1>
+<% form_for(@organization, :url => org_organization_path(:id => @organization.id), :html => {:method => :put}) do |of| %>
+  <%= of.error_messages.untaint %>
+  <%= of.submit "戻る", :name => 'cancel' %>
+  <br /><br />
+  <%= render :partial => "org_confirm", :locals => {:of => of} %>
+  <br />
+  <%= of.submit "保存" %>
+  <%= hidden_field_tag "account[password]", params[:account][:password] %>
+  <%= hidden_field_tag "account[password_confirmation]", params[:account][:password_confirmation] %>
+<% end %>

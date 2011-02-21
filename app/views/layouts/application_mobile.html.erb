@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=SHIFT_JIS">
+    <title>mobile</title>
+  </head>
+  <body>
+
+    <a name="page_top"></a>
+
+    <p align="right">
+      <% if logged_in? -%>
+        <%= link_to "ログアウト", logout_path %>
+      <% end -%>
+    </p>
+    <p align="left">
+      <% if logged_in? %>
+        <% if current_account.status == 0 -%>
+          <%= render :partial => "/share/mobile_menu/organization" %>
+        <% elsif current_account.status == 1 -%>
+          <%= render :partial => "/share/mobile_menu/organization" %>
+        <% elsif current_account.status == 2 -%>
+          <%= render :partial => "/share/mobile_menu/organization" %>
+        <% elsif current_account.status == 3 -%>
+          <%= render :partial => "/share/mobile_menu/recipient" %>
+        <% end -%>
+      <% end %>
+    </p>
+    <p align="right">
+      <% if logged_in? && current_account.organization? -%>
+        <%= link_to current_account.organization.name,
+                    org_organization_path(current_account.organization) %>
+      <% end -%>
+    </p>
+
+    <%= yield %>
+
+  </body>
+</html>

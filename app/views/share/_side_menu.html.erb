@@ -1,0 +1,14 @@
+<% if logged_in? %>
+  <% if current_account.status == 0 -%>
+    <%= render :partial => '/share/side_menu/super_admin' %>
+  <% elsif current_account.status == 1 -%>
+    <%= render :partial => '/share/side_menu/organization' %>
+  <% elsif current_account.status == 2 -%>
+    <%= render :partial => '/share/side_menu/organization' %>
+  <% elsif current_account.status == 3 -%>
+    <%= render :partial => '/share/side_menu/recipient' %>
+  <% elsif current_account.status == 4 -%>
+    <%= render :partial => '/share/side_menu/recipient' %>
+  <% end -%>
+<% end %>
+
