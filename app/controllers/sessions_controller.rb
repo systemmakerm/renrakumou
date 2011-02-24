@@ -112,7 +112,7 @@ class SessionsController < ApplicationController
 
   def destroy
     logout_killing_session!
-    redirect_back_or_default('/renrakumou/session/new')
+    redirect_back_or_default('/session/new')
   end
 
   def rcnum

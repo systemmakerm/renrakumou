@@ -38,9 +38,9 @@ Rails::Initializer.run do |config|
     :address => 'mail domain',
     :port => 25,
     :domain => 'mail domain',
-#    :authentication => :plain,
-#    :user_name => '',
-#    :password => ''
+    :authentication => :plain,
+    :user_name => '',
+    :password => ''
   }
   config.action_mailer.default_charset = 'iso-2022-jp'
 
